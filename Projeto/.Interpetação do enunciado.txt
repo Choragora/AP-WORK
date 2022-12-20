@@ -1,0 +1,59 @@
+Interpetaçãoao do enunciado
+
+N em Linha    
+    
+###########  1 - Datas  ###########
+    
+    13/01/2022 - Entrega Final
+
+###########  2 - Descrição  ###########
+
+    Registar:
+    - Numero de Jogadores
+    - Numero de Vitórias
+    - Jogos jogados
+
+###########  2.1 - Peças  ###########
+    
+    Numero de peças:
+    - n = numero de peças
+    - n = [3, +infinito[
+    
+    Peças unitárias:
+    - Ilimitadas
+
+    Peças especiais:
+    
+    Numero:
+    - Opção 1 - Definidas pelo Jogador
+    - Opção 2 - Definidas consoante o valor do n
+
+    Compostas por:
+    - Tamanho: Tamanho < grelha
+
+###########  2.2 - Colocação das peças  ###########
+
+    Peças unitárias:
+    - Indentificar coluna (e criar uma equação que verifique se existem peças abaixo), e introduzir o simbolo do respetivo jogador
+
+    Peças especiais:
+    - Posição inicial (coluna) e o sentido (Direta, Esquerda) ----> 3D (Coluna 3, Para a direita)
+    - Colocação peças está em conformidade com o tamanho -----> 3D, n=4 (4 peças na coluna 3 para a direita)
+    - A atribuição da colocação das peças, não pode passar para fora do grelha.
+
+########### 2.3 - Parametros de jogo  ########### 
+
+    w = Comprimento da grelha é composto um número inteiro (colunas)
+    h = Altura da grelha é composta por um número inteiro, em que tem condição: [w/2 <= h <= w], h é maior que metade do comprimento e menor que o comprimento (linhas)
+    n = numero de peças em linha para determinar a vitória, em que n é um numero inteiro e: n <= w, o número de peças tem que ser menor ou igual ao comprimento da grelha, colunas.
+    s = Conjunto de tamanhos de peças especiais para cada jogador, em que s é um número inteiro.
+
+###########  2.4 - Condição de Vitória  ########### 
+
+    Posições:
+    -Vertical
+    -Horizontal
+    -Diagonal
+
+
+    
