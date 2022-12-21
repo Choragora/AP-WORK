@@ -58,8 +58,7 @@ N em Linha
 ###########  3 - Instruções  ########### 
 
     Cada linha é terminada com o caráter fim de linha .
-    Os simbolos invisiveis sao representados graficamente por 
-    OS espaços em branco sao representados por 
+    Os espaços em branco sao representados por 
     Para cada instrução de sucesso ou insucesso é indicada a lista de expressoes de saida
 
 ###########  3.1 - Saídas com insucesso  ########### 
@@ -72,7 +71,7 @@ N em Linha
 o programa deve escrever:
         Instrução inválida.
 
-                A IMPLEMENTAÇÃO NAO DEVE SUPORTAR MAIS INTRUCOES DO QUE AS QUE ESTAO DISCRITAS
+                A IMPLEMENTAÇÃO NÃO DEVE SUPORTAR MAIS INTRUCOES DO QUE AS QUE ESTAO DISCRITAS
 
 ###########  4 - Parâmetros  ########### 
 
