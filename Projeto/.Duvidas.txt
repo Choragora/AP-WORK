@@ -1,0 +1,4 @@
+Duvidas:
+    - Funcionamento de ficheiros, se iremos abordar futuramente
+    - Se podemos ter criatividade ou se temos que seguir à risca o enunciado, (tendo em conta que iremos seguir tudo à risca mas se necessário adicionar extras necessários para um melhor funcionamento do código)
+    - Como funciona a 2ª saida com insucesso: Quando o jogador indicado participa no jogo em curso
