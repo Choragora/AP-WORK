@@ -55,5 +55,225 @@ N em Linha
     -Horizontal
     -Diagonal
 
+###########  3 - Instruções  ########### 
+
+    Cada linha é terminada com o caráter fim de linha .
+    Os simbolos invisiveis sao representados graficamente por 
+    OS espaços em branco sao representados por 
+    Para cada instrução de sucesso ou insucesso é indicada a lista de expressoes de saida
+
+###########  3.1 - Saídas com insucesso  ########### 
+
+    Se se verificarem várias situações de insucesso em simultâneo, deve surgir apenas a 1ª mensagem do cenário
+
+###########  3.2 - Instrução inválida  ########### 
+
+    Uma instrução nao prevista na lista de intruções ou um número de parâmetros errado para uma instrução existente,
+o programa deve escrever:
+        Instrução inválida.
+
+                A IMPLEMENTAÇÃO NAO DEVE SUPORTAR MAIS INTRUCOES DO QUE AS QUE ESTAO DISCRITAS
+
+###########  4 - Parâmetros  ########### 
+
+    Nome -> Nome dos Jogadores
+
+    Tipo -> Tipo de peça
+
+    Jogos -> Número de jogos jogados pelo jogador
+
+    Vitórias -> Número de vitórias do jogador em causa
+
+    Comprimento e Altura -> São as dimensões da grelha do jogo
+
+    TamanhoSequência -> Tamanho da sequência vencedora
+
+    TamanhoPeça -> Tamanho de um peça especial
+
+            (TamanhoPeça != TamanhoSequência)
+    
+    Quantidade -> Número de peças especiais atualmente disponíveis para o jogador
+
+    Posição -> Coordenada horizontal onde a peça será colocada
+
+    Sentido -> É o sentido (E ou D) na horizontal para onde a peça será colocada (É opcional, podendo será omitida se a peça tiver tamanho 1)
+
+    Conteúdo -> Pode ser vazio caso nenhuma peça se encontre na posição, ou o nome do jogador com peça na posição
+
+    NomeFicheiro -> É o nome do ficheiro onde será feita a gravação
+
+
+
+    RJ (Registar Jogador) -> Regista um novo jogador. Cada jogador tem um nome único. Não existe limite para o número de jogadores registados.
+        Entrada:
+            -RJ Nome
+        
+        Saída com sucesso:
+            -Jogador registado com sucesso.
+
+        Saída com insucesso:
+            Quando o jogador indicado já se encontra registado  
+                -Jogador existente.
+
+
+    EJ (Remover Jogador) -> Remove um jogador previamente registado, se este não estiver a participar no jogo em curso.
+        Entrada:
+            -EJ Nome
+
+        Saída com sucesso:
+            -Jogador removido com sucesso.
+
+        Saída com insucesso:
+            Quando o jogador indicado não se encontra registado
+                -Jogador não existente.
+            Quando o jogador indicado participa no jogo em curso    
+                -Jogador participa no jogo em curso.
+
+
+    LJ (Listar Jogadores) -> Lista os jogadores registados por ordem alfabética, indicando o número de jogos jogados e Vitórias
+        Entrada:
+            -LJ
+
+        Saída com sucesso:
+            -Nome Jogos Vitorias
+            -Nome Jogos Vitorias
+            -...
+
+        Saída com insucesso:
+            Quando não existem jogadores registados
+                -Não existem jogadores registados.
+
+
+    IJ (Iniciar Jogo) -> Inicia um novo jogo, se não estiver ainda nenhum jogo iniciado. É necesário indicar:
+        -O nome dos jogadores que irão participar ;
+        -As dimensões da grelha ;
+        -O tamanho da sequência vendora ;
+        -Peças especiais disponíveis.
+        Os jogadores têm que estar previamente registados. O jogo inicia indicando o nome dos jogadores que nele 
+    participam por ordem alfabética.
+        Entrada:
+            -IJ Nome Nome
+            -Comprimento Altura TamanhoSequência
+            -TamanhoPeça TamanhoPeça ... TamanhoPeça
+        
+        Saída com sucesso:
+            -Jogo iniciado entre Nome e Nome.
+            
+        Saída com insucesso:
+            Quando já existe um jogo em curso
+                -Existe um jogo em curso.
+            Quando algum dos jogadores indicados não se encontra registado
+                -Jogador não registado.
+            Quando as dimensões da grelha não respeitam as regras indicadas na secção 2.2
+                -Dimensões da grelha inválidas.
+            Quando o tamanho da sequência vendora não respeita as regras indicadas na secção 2.2
+                -Tamanho da sequência inválido.
+            Quando alguma dimensão das peças especiais não respeita as regras indicadas na secção 2.2
+                -Dimensões da peças especiais inválidas.
+
+ 
+    DJ (Detalhes de Jogo) -> Mostra informação sobre o jogo em curso: tamanho da grelha, jogadores por ordem alfabética, e tipo e quantidade de peças especiais disponíveis para cada jogador.
+        Entrada:
+            -DJ
+
+        Saída com sucesso:
+            - Comprimento Altura
+            - Nome
+            - TamanhoPeça Quantidade
+            - TamanhoPeça Quantidade
+            - ...
+
+        Saída com insucesso:
+            Quando não existe jogo em curso.
+                - Não existe jogo em curso.
+                
+                
+    D (Desistir) -> Quando existe uma desistencia de um jogador, o seu adversario recebe a vitória, se ambos desistirem nao existe vitoria nem derrota mas o jogo é cotado a mesma.
+        Entrada:
+            - D Nome [Nome]         -- O segundo parâmetro nome é opcional (cada o caso dos 2 jogadores queiram desistir)
+
+        Saida com sucesso:
+            - Desistência com sucesso. Jogo terminado.
+
+        Saída com insucesso:
+            Quando algum dos jogadores indicados não se encontra registado.
+                - Jogador não registado.
+            Quando não existe jogo em curso.
+                - Não existe jogo em curso.
+            Quando um dos jogadores indicados não participa no jogo em curso.
+                - Jogador não participa no jogo em curso.
+
+
+    CP (Colocar Peça) -> É o ato de jogar, ou seja definir se quer usar peça unitária ou especial, se for unitária apenas definir qual a coluna a jogar, se for especial, indentificar o tamanho e o sentido.
+        Entrada:
+            - CP Nome, TamanhoPeça, Posição[ Sentido]
+            
+        Saída com sucesso:
+            Quando a peça colocada possibilita uma sequência vencedora.
+                - Sequência conseguida. Jogo terminado.
+            Após colocação da peça.
+                - Peça colocada.
+
+        Saída com insucesso:
+            Quando não existe jogo em curso.
+                - Não existe jogo em curso.
+            Quando o jogador indicado não participa no jogo em curso.
+                - Jogador não participa no jogo em curso.
+            Quando não for possível utilizar uma peça com o tamanho indicado (por inexistência ou indisponibilidade).
+                - Tamanho de peça não disponivel.
+            Quando a posição e sentido indicados não permitirem a colocação da peça, de acordo com as regras indicadas na Secção 2.2.
+                - Posição irregular.
+                
+                
+    V (Vizualizar resultado) - Mostra o resultado atual da grelha do jogo em curso, indicando o conteúdo de cada posição. As posições são mostradas de cima para baixo, da esquerda para a direita, indicando linha, coluna, e conteúdo.
+        Entrada:
+            - V
+
+        Saída com sucesso:
+            - 1 1 Conteudo
+            - 1 2 Conteudo
+            - ...
+            - Altura Comprimento Conteudo 
+    
+        Saída com insicesso:
+             -Quando não existe jogo em curso.1ª
+    
+    
+    G (Gravar) - Grava a lista de jogadores, resultados, e estado do jogo em curso (se existir) em ficheiro.1ª
+        NomeFicheiro é o nome do ficheiro onde será feita a gravação.
+        Entrada:
+            - G NomeFicheiro
+        
+        Saída com sucesso:
+            - Jogo gravado.
+
+        Saída com insucesso:
+            No caso de ocorrer um erro de escrita.
+                - Ocorreu um erro na gravação.  
+    
+    
+    Ler (L) - Lê a lista de jogadores, resultados, e estado do jogo em curso (se existir) de ficheiro.
+        NomeFicheiro é o nome do ficheiro de onde será feita a leitura.
+        Entrada:
+            - NomeFicheiro
+
+        Saída com sucesso:
+            - Jogo carregado.
+
+        Saída com insucesso:
+            No caso de ocorrer um erro de acesso ao ficheiro, ou dados corrompidos.
+                -Ocorreu um erro no carregamento.
+            
+        
+
+
+
+
+
+    
+
+
+
+
 
     
