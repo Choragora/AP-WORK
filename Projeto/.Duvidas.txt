@@ -2,3 +2,6 @@ Duvidas:
     - Funcionamento de ficheiros, se iremos abordar futuramente
     - Se podemos ter criatividade ou se temos que seguir à risca o enunciado, (tendo em conta que iremos seguir tudo à risca mas se necessário adicionar extras necessários para um melhor funcionamento do código)
     - Como funciona a 2ª saida com insucesso: Quando o jogador indicado participa no jogo em curso
+    - Podemos explicar as regras do jogo ao utilizador antes de ser pedido os valores do tamanho da grelha
+    - Como funcionam os ficheiros
+    - Se o resultado pode aparecer apos cada jogada ao em vez do utilizador pedir

@@ -13,3 +13,9 @@ def listar_jogadores(lista_jogadores, lista_partidas, lista_vitorias, lista_lj):
     vitorias = lista_vitorias[i]
     lista_lj.append([jogadores, partidas, vitorias])
   return lista_lj
+
+def nome_jogadores_ij (jogador_1, jogador_2, jogadores_jogo):
+  jogadores_jogo.append(jogador_1)
+  jogadores_jogo.append(jogador_2)
+  jogadores_jogo.sort()
+  return jogadores_jogo
