@@ -1,3 +1,7 @@
+import os
+
+os.system("cls")
+
 linhas = int(input('linhas-'))
 colunas = int(input("colunas-"))
 valor_lateral = 0

@@ -6,3 +6,4 @@ Duvidas:
     - Como funcionam os ficheiros
     - Se o resultado pode aparecer apos cada jogada ao em vez do utilizador pedir
     - Podemos fazer prints dentro de funções
+    - na tabela se tiver um numero maior que 9, a tabela fica desformatada
