@@ -5,3 +5,4 @@ Duvidas:
     - Podemos explicar as regras do jogo ao utilizador antes de ser pedido os valores do tamanho da grelha
     - Como funcionam os ficheiros
     - Se o resultado pode aparecer apos cada jogada ao em vez do utilizador pedir
+    - Podemos fazer prints dentro de funções

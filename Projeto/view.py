@@ -2,20 +2,20 @@ from controller import *
 import os
 
 def main():
-### MENU ###
+########### MENU ############
     lista_jogadores = []
     lista_lj = []
     lista_partidas = [1, 3, 4]
     lista_vitorias = [1, 2, 3]
 
-    os.system("cls")
+    
     while True: 
         print("""
     =-==-==-==-==-==-==-==-==-==-==-
     |                              |
     |        "N" em Linha \U0001f579\uFE0F        |
     |                              |
-    |    [IJ] - Iniciar Jogo       |
+    |    [IJ] - Iniciar Jogo       | 
     |    [RJ] - Registar Jogador   |
     |    [EJ] - Eliminar Jogador   |
     |    [LJ] - Listar Jogador     |
