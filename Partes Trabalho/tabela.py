@@ -13,11 +13,11 @@ for i in range (linhas):
     tabela.append(["|___|"] * colunas)
 
 for i in range(colunas):
-    print(f"   {i} ", end="")
+    print(f"    {i}", end="")
 print()  
    
 for i in range(len(tabela)):
-    print(valor_lateral,end = '')
+    print(valor_lateral,end = ' ')
     valor_lateral += 1
     for j in range(len(tabela[i])):
         print(tabela[i][j],end = '')                        #mexe em cada linha e cada coluna em separado
@@ -25,7 +25,7 @@ for i in range(len(tabela)):
 
 while True:
     valor_lateral = 0
-    print("""Jogada jogador 1: """)
+    print("Jogada jogador 1: ")
     linha = int(input("Entre com a linha: "))
     coluna = int(input("Entre com a coluna: "))
 
