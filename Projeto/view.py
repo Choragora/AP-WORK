@@ -2,92 +2,109 @@ from controller import *
 import os
 
 def main():
-########### MENU ############
+            ########### MENU ############
+    
+    tabela = []
     lista_jogadores = []
     lista_lj = []
     lista_partidas = [1, 3, 4]
     lista_vitorias = [1, 2, 3]
 
-    
+    os.system("cls")
     while True: 
-        print("""
-    =-==-==-==-==-==-==-==-==-==-==-
-    |                              |
-    |        "N" em Linha \U0001f579\uFE0F        |
-    |                              |
-    |    [IJ] - Iniciar Jogo       | 
-    |    [RJ] - Registar Jogador   |
-    |    [EJ] - Eliminar Jogador   |
-    |    [LJ] - Listar Jogador     |
-    |    [SM] - Sair do Menu       |
-    |                              |
-    =-==-==-==-==-==-==-==-==-==-==-
-    """)
+    #     print("""
+    # =-==-==-==-==-==-==-==-==-==-==-==
+    # |                                |
+    # |         "N" em Linha \U0001f579\uFE0F         |
+    # |                                |
+    # |     [IJ] - Iniciar Jogo        | 
+    # |     [RJ] - Registar Jogador    |
+    # |     [EJ] - Eliminar Jogador    |
+    # |     [LJ] - Listar Jogador      |
+    # |     [DJ] - Detalhes de Jogo    |
+    # |     [D] - Desistir             | 
+    # |     [CP] - Colocar Peça        |
+    # |     [V] - Vizualizar Resultado |
+    # |     [G] - Gravar               |
+    # |     [L] - Ler                  |
+    # |     [SM] - Sair do Menu        |
+    # |                                |
+    # =-==-==-==-==-==-==-==-==-==-==-==
+    # """)
         
-        opcao_menu = input("Introduza a sua opção: ").lower()
-    
-        if opcao_menu == "ij":                                                                            #iniciar jogo
-            if len(lista_jogadores) > 1:                                                                  #indicar os jogadores que irão jogar
+        opcao = input("Introduza a sua opção: ").lower().split(' ')
+
+        
+            ########### INICIAR JOGO ############
+
+
+        if opcao[0] == "ij":                                                                                #iniciar jogo
+            comprimento = int(opcao[3])
+            altura = int(opcao[4])
+            sequencia_vencedora = int(opcao[5])
+                                                                                       
+            if len(lista_jogadores) > 1:                                                                  
                 jogadores_jogo = []
-                jogador_1 = input("Introduza o nome do jogador 1. ")
-                jogador_2 = input("Introduza o nome do jogador 2. ")
-                while (jogador_1 not in lista_jogadores) or (jogador_2 not in lista_jogadores):
+                ## Nomes ##
+                if (opcao[1] not in lista_jogadores) or (opcao[2] not in lista_jogadores):    
                     print("Jogador não registado.")
-                    jogador_1 = input("Introduza o nome do jogador 1. ")
-                    jogador_2 = input("Introduza o nome do jogador 2. ")
-                nome_jogadores_ij(jogador_1, jogador_2, jogadores_jogo)
-            
-                comprimento = int(input("Introduza o comprimento da grelha: "))                           #indicar as dimensoes da grelha
-                altura = int(input("Introduza a altura da grelha: "))
-                while (altura > comprimento) or (altura < comprimento/2): 
-                    print("Dimensões de grelha invalidas.")
-                    comprimento = int(input("Introduza o comprimento da grelha: "))
-                    altura = int(input("Introduza a altura da grelha: "))
-                    #necessário uma função que cria a grelha consoante a dimensao da mesma 
+                else:    
+                    nome_jogadores_ij(opcao[1], opcao[2], jogadores_jogo)
                 
-                seq_vencedora = int(input("Introduza o número da sequencia vencedora: "))
-                while seq_vencedora == 1 or seq_vencedora == 2 or seq_vencedora > comprimento:
+                ## Dimensoes ##
+                if (comprimento < altura) or (comprimento/2 > altura): 
+                    print("Dimensões de grelha invalidas.")
+                else:  
+                    criar_tabela(comprimento, altura, tabela)
+                    print(tabela)
+
+                ## Sequencia vencedora ##
+                if sequencia_vencedora == 1 or sequencia_vencedora == 2 or sequencia_vencedora > comprimento:
                     print("Tamanho de sequência invalido.")
-                    seq_vencedora = int(input("Introduza o número da sequencia vencedora: "))
+                else:
+                    pass
                     #funçao que regista o n em linha
 
                 #ultimo ponto: peças especiais 
-                 
-                
+
             else:
                 print("É necessários estarem registados 2 jogadores.")
                 
-
-                
-                   
             
-            
+            ########### REGISTAR JOGADOR ############
 
-        elif opcao_menu == "rj":                                                                            #registar jogador
-            nome_registar = input("Introduza o nome a registar: ").lower()
-            while nome_registar in lista_jogadores:                                                         #loop que só é quebrado quando o jogador nao está na lista.
+
+        elif opcao[0] == "rj":                                                                            #registar jogador
+            if opcao[1] in lista_jogadores:                                                         #loop que só é quebrado quando o jogador nao está na lista.
                 print("Jogador existente.")
-                nome_registar = input("Introduza o nome a registar: ").lower()
-            registar_jogador(nome_registar, lista_jogadores)                                                #registar jogadores, adicionando a lista de jogadores
-            print("Jogador registado com sucesso.")
+            else:
+                registar_jogador(opcao[1], lista_jogadores)                                                #registar jogadores, adicionando a lista de jogadores
+                print("Jogador registado com sucesso.")
+                print(lista_jogadores)
+            
 
-        #ver ficheiros e armazenar os nomes dentro dos ficheiros
-
-        elif opcao_menu == "ej":                                                                            #eliminar jogador
+            ########### ELIMINAR JOGADOR ############
+           
+            
+        elif opcao[0] == "ej":                                                                            #eliminar jogador
             if len(lista_jogadores) == 0:                                                                   #verificação de número de jogadores, se estiver vazia é resultante uma saida com insucesso
                 print("Não existem jogadores registados")
             else:
-                nome_remover = input("Introduza o nome a remover: ").lower()
-                while nome_remover not in lista_jogadores:                                                  #loop que só é quebrado quando o jogador está na lista.
+                if opcao[1] not in lista_jogadores:                                                  #loop que só é quebrado quando o jogador está na lista.
                     print("Jogador não existente.")
-                    nome_remover = input("Introduza o nome a eliminar: ").lower()
-                remover_jogador(nome_remover, lista_jogadores)                                              #remover jogadores, removendo da lista de jogadores
-                print("Jogador removido com sucesso.")
+                else:
+                    remover_jogador(opcao[1], lista_jogadores)                                              #remover jogadores, removendo da lista de jogadores
+                    print("Jogador removido com sucesso.")
+                    print(lista_jogadores)
 
                 # EM FALTA !!!!!!!!!
-                # Saída com insucesso: Quando o jogador indicado não se encontra registado.
+                # Saída com insucesso: Quando o jogador participa no jogo em curso.
+
+
+            ########### LISTAR JOGADOR ############
+
                 
-        elif opcao_menu == "lj":                                                                            #listar jogadores              
+        elif opcao[0] == "lj":                                                                            #listar jogadores              
             if len(lista_jogadores) == 0:                                                                   #verificação de número de jogadores, se estiver vazia é resultante uma saida com insucesso
                 print("Não existem jogadores registados.")
             else:
@@ -96,7 +113,40 @@ def main():
                 for jogadores, partidas, vitorias in lista_lj:                                              #ve a primeira lista dentro da lista_lj
                     print(f"Nome: {jogadores} / Partidas: {partidas} / Vitórias: {vitorias}")
 
-        elif opcao_menu == "sm":
+            ########### DETALHES JOGO ############
+
+        elif opcao[0] == "dj":
+            pass
+
+            ########### DESISTIR #############
+
+        elif opcao[0] == "d":
+            pass
+            
+            ########### COLOCAR PEÇA #############
+
+        elif opcao[0] == "cp":
+            pass
+
+            ########### VISUALIZAR RESULTADO #############
+
+        elif opcao[0] == "v":
+            valor_lateral = 0
+            desenhar_tabela(comprimento, tabela, valor_lateral)
+
+            ########### GRAVAR #############
+        
+        elif opcao[0] == "g":
+            pass
+        
+            ########## LER #############
+
+        elif opcao[0] == "l":
+            pass
+            
+            ########### SAIR DO MENU ############
+
+        elif opcao[0] == "sm":
             break
         
         else:

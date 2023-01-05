@@ -18,7 +18,26 @@ def listar_jogadores(lista_jogadores, lista_partidas, lista_vitorias, lista_lj):
 
 
 def nome_jogadores_ij (jogador_1, jogador_2, jogadores_jogo):
+
+
   jogadores_jogo.append(jogador_1)
   jogadores_jogo.append(jogador_2)
   jogadores_jogo.sort()
   return jogadores_jogo
+
+
+def criar_tabela(comprimento,altura, tabela):
+  for i in range (altura):
+    tabela.append(["|___|"] *comprimento)
+
+def desenhar_tabela(comprimento, tabela, valor_lateral):
+  for i in range(comprimento):
+      print(f"    {i}", end="")
+  print()  
+    
+  for i in range(len(tabela)):
+      print(valor_lateral,end = ' ')
+      valor_lateral += 1
+      for j in range(len(tabela[i])):
+          print(tabela[i][j],end = '')                        
+      print()                                            

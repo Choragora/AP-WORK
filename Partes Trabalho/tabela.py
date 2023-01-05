@@ -20,7 +20,7 @@ for i in range(len(tabela)):
     print(valor_lateral,end = ' ')
     valor_lateral += 1
     for j in range(len(tabela[i])):
-        print(tabela[i][j],end = '')                        #mexe em cada linha e cada coluna em separado
+        print(tabela[i][j],end = '')                        
     print()                                                 #adicionar um espaço em branco e a garantir que damos espaçosz
 
 while True:
