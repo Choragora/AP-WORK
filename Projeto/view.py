@@ -9,6 +9,7 @@ def main():
     lista_lj = []
     lista_partidas = [1, 3, 4]
     lista_vitorias = [1, 2, 3]
+    lista_pecas_especiais = []
 
     os.system("cls")
     while True: 
@@ -42,6 +43,7 @@ def main():
             comprimento = int(opcao[3])                                 
             altura = int(opcao[4])
             sequencia_vencedora = int(opcao[5])
+            peças_especiais = 5
                                                                                        
             if len(lista_jogadores) > 1:                                                                                #se a lista tiver pelo menos dois jogadores registados                                  
                 jogadores_jogo = []                                                     
@@ -63,9 +65,12 @@ def main():
                     print("Tamanho de sequência invalido.")
                 else:
                     pass
-                    #funçao que regista o n em linha
-
-                #ultimo ponto: peças especiais 
+                    
+                ## Peças especais ##
+                peças_especiais += 1
+                if opcao([peças_especiais]) == 6:
+                    print("ola")
+                
 
             else:
                 print("É necessários estarem registados 2 jogadores.")

@@ -1,5 +1,11 @@
-def tem_sequencia_vencedora(tabuleiro):
-    for linha in tabuleiro:
-        if linha[0] == linha[1] == linha[2] == linha[3] or linha[1] == linha[2] == linha[3] == linha[4]
-            return True
-    return False
+tabela = [1, 2, None, 4, '']
+elementos_vazios = [i for i, x in enumerate(tabela) if x == '']
+
+print("Elementos Vazios : ", elementos_vazios)
+
+for i in range(len(tabela)):
+    if i == elementos_vazios[0]:
+        tabela[i] = 'x'
+        break
+
+print("tabela : ", tabela)

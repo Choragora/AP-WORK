@@ -27,7 +27,7 @@ def nome_jogadores_ij (jogador_1, jogador_2, jogadores_jogo):                   
 def criar_tabela(comprimento,altura, tabela):                                               #funcao que queria os slots da tabela
   for i in range (altura):
     tabela.append(["|___|"] *comprimento)
-
+############################
 def desenhar_tabela(comprimento, tabela, valor_lateral):                                    #funcao que desenha a tabela vazia 
   for i in range(comprimento):
       print(f"    {i}", end="")
