@@ -1,25 +1,35 @@
-def criar_tabela(comprimento, altura, tabela):
-  for i in range (altura):
-    tabela.append(["|___|"] * comprimento)
-
-def desenhar_tabela(altura, tabela, valor_lateral):
-  for i in range(altura):
-      print(f"    {i}", end="")
-  print()  
-    
-  for i in range(len(tabela)):
-      print(valor_lateral,end = ' ')
-      valor_lateral += 1
-      for j in range(len(tabela[i])):
-          print(tabela[i][j],end = '')                        
-      print()                                            
-
-comprimento = 5
-altura = 7
-tabela = []
+linhas = int(input('linhas-'))
+colunas = int(input("colunas-"))
 valor_lateral = 0
-criar_tabela(comprimento, altura, tabela)
-print(tabela)
+tabela = []
 
-desenhar_tabela(altura, tabela, valor_lateral)
+########## TABELA VAZIA #################
 
+for i in range (linhas):
+    tabela.append(["|___|"] * colunas)
+
+for i in range(colunas):
+    print(f"    {i}", end="")
+print()  
+   
+for i in range(len(tabela)):
+    print(valor_lateral,end = ' ')
+    valor_lateral += 1
+    for j in range(len(tabela[i])):
+        print(tabela[i][j],end = '')                        
+    print()                                                 #adicionar um espaço em branco e a garantir que damos espaçosz
+
+while True:
+    valor_lateral = 0
+    print("Jogada jogador 1: ")
+    colunas = int(input("Em que coluna deseja jogar? "))
+
+    ultima_coluna_vazia = 1
+
+    for i in range(len(tabela)):
+        if tabela[i][colunas] == "|___|":
+            last_empty_column = i
+        else:
+            break
+    tabela[last_empty_column][colunas] = "1"
+    print(tabela)

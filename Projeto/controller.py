@@ -17,11 +17,11 @@ def listar_jogadores(lista_jogadores, lista_partidas, lista_vitorias, lista_lj):
   return lista_lj
 
 
-def nome_jogadores_ij (jogador_1, jogador_2, jogadores_jogo):                               #funcao que adiciona os nomes dos 2 jogadores dentro de uma lista e ordena os mesmos alfabeticamente
-  jogadores_jogo.append(jogador_1)
-  jogadores_jogo.append(jogador_2)
-  jogadores_jogo.sort()
-  return jogadores_jogo
+def nome_jogadores_ij (jogador_1, jogador_2, lista_jogo):                               #funcao que adiciona os nomes dos 2 jogadores dentro de uma lista e ordena os mesmos alfabeticamente
+  lista_jogo.append(jogador_1)
+  lista_jogo.append(jogador_2)
+  lista_jogo.sort()
+  return lista_jogo
 
 
 def criar_tabela(comprimento,altura, tabela):                                               #funcao que queria os slots da tabela
@@ -38,4 +38,9 @@ def desenhar_tabela(comprimento, tabela, valor_lateral):                        
       valor_lateral += 1
       for j in range(len(tabela[i])):
           print(tabela[i][j],end = '')                        
-      print()                                            
+      print()
+
+def pecas_especiais(peca, lista_pecas_especiais_j1, lista_pecas_especiais_j2):
+  lista_pecas_especiais_j1.append(peca)
+  lista_pecas_especiais_j2.append(peca)
+  return lista_pecas_especiais_j1, lista_pecas_especiais_j2                                          
