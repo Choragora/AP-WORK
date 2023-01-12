@@ -24,23 +24,30 @@ def nome_jogadores_ij (jogador_1, jogador_2, lista_jogo):                       
   return lista_jogo
 
 
-def criar_tabela(comprimento,altura, tabela):                                               #funcao que queria os slots da tabela
-  for i in range (altura):
-    tabela.append(["|___|"] *comprimento)
-############################
-def desenhar_tabela(comprimento, tabela, valor_lateral):                                    #funcao que desenha a tabela vazia 
-  for i in range(comprimento):
-      print(f"    {i}", end="")
-  print()  
-    
-  for i in range(len(tabela)):
-      print(valor_lateral,end = ' ')
-      valor_lateral += 1
-      for j in range(len(tabela[i])):
-          print(tabela[i][j],end = '')                        
-      print()
+# def criar_tabela(comprimento,altura, tabela):                                               #funcao que queria os slots da tabela
+#   for i in range (altura):
+#     tabela.append(["|___|"] *comprimento)
+
 
 def pecas_especiais(peca, lista_pecas_especiais_j1, lista_pecas_especiais_j2):
   lista_pecas_especiais_j1.append(peca)
   lista_pecas_especiais_j2.append(peca)
-  return lista_pecas_especiais_j1, lista_pecas_especiais_j2                                          
+  return lista_pecas_especiais_j1, lista_pecas_especiais_j2   
+
+# def colocar_peca_j1(colunas, lista_tabela):
+#   ultimo_elemento_vazio = 1
+#   for i in range(len(lista_tabela)):
+#     if lista_tabela[i][colunas] == "|___|":
+#         ultimo_elemento_vazio = i
+#     else:
+#         break
+#   lista_tabela[ultimo_elemento_vazio][colunas] = "| X |"
+
+# def colocar_peca_j2(colunas, lista_tabela):
+#   ultimo_elemento_vazio = 1
+#   for i in range(len(lista_tabela)):
+#       if lista_tabela[i][colunas] == "|___|":
+#           ultimo_elemento_vazio = i
+#       else:
+#           break
+#   lista_tabela[ultimo_elemento_vazio][colunas] = "| O |"                                      

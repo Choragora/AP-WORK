@@ -11,7 +11,9 @@ def main():
     lista_vitorias = [1, 2, 3]
     lista_pecas_especiais_j1 = []
     lista_pecas_especiais_j2 = []            
+    lista_sentidos = ["e", "d"]
     temp = 0
+
     valor_lateral=0 
     os.system("cls")
     while True: 
@@ -54,7 +56,8 @@ def main():
                         nome_jogadores_ij(opcao[1], opcao[2], lista_jogo)
                         ## Dimensoes ##
                         if (comprimento/2 <= altura <= comprimento):                                                                  #verifica as condições da dimensao da grelha
-                            criar_tabela(comprimento, altura, lista_tabela)                                                           #cria os slots com os inseridos
+                            for i in range (altura):
+                                lista_tabela.append(["|___|"] *comprimento)                                                           #cria os slots com os inseridos
                             ## Sequencia vencedora ##
                             if sequencia_vencedora != 1 and sequencia_vencedora != 2 and sequencia_vencedora < comprimento:           #verifica as condições da sequencia vencedora
                                ## Peças especais ##
@@ -132,20 +135,12 @@ def main():
 
                 
         elif opcao[0] == "lj":                                                                                          #listar jogadores              
-            if len(lista_rj) == 0:                                                                               #verificação de número de jogadores, se estiver vazia é resultante uma saida com insucesso
-                print("Não existem jogadores registados.")
-            else:
-                lista_lj = []                                                                                           #serve para reiniciar os valores caso seja adicionado um nojogo jogador
-                listar_jogadores(lista_rj, lista_partidas, lista_vitorias, lista_lj) 
-                for jogadores, partidas, vitorias in lista_lj:                                                          #ve a primeira lista dentro da lista_lj
-                    print(f"Nome: {jogadores} / Partidas: {partidas} / Vitórias: {vitorias}")
+            pass
 
             ########### DETALHES JOGO ############
 
         elif opcao[0] == "dj":                                                                                          #detalhes do jogo
-            if len(lista_tabela) != 0:
-                print(f"{comprimento} {altura}")
-                print("")
+            pass
 
 
             ########### DESISTIR #############
@@ -155,31 +150,106 @@ def main():
             
             ########### COLOCAR PEÇA #############
 
-        elif opcao[0] == "cp":
+        elif opcao[0] == "cp":                      #EM FALTA!!! --- verificar se a peca passa para fora do tabuleiro, e se a peca passa para cima do tabuleiro, len(altura) > altura nao meter peça
+            tamanho_peca = int(opcao[2])
             colunas = int(opcao[3])                                                                                          #colocar peça
             if len(lista_tabela) != 0: 
                 if opcao[1] in lista_jogo:
+                    ## MUDANCA DE JOGADOR ##
                     if opcao[1] != temp:                                                      
                         temp = opcao[1]
-                        if temp == lista_jogo[0]:
-                            ultimo_elemento_vazio = 1
-                            for i in range(len(lista_tabela)):
-                                if lista_tabela[i][colunas] == "|___|":
-                                    ultimo_elemento_vazio = i
+                        ## PECA UNITARIA ##
+                        if tamanho_peca == 1:
+                            if temp == lista_jogo[0]: #jogador 1
+                                ultimo_elemento_vazio = 1
+                                for i in range(len(lista_tabela)):
+                                    if lista_tabela[i][colunas] == "|___|":
+                                        ultimo_elemento_vazio = i
+                                    else:
+                                        break
+                                lista_tabela[ultimo_elemento_vazio][colunas] = "| X |"
+                                print("Peça colocada.")
+                            elif temp == lista_jogo[1]: #jogador 2
+                                ultimo_elemento_vazio = 1
+                                for i in range(len(lista_tabela)):
+                                    if lista_tabela[i][colunas] == "|___|":
+                                        ultimo_elemento_vazio = i
+                                    else:
+                                        break
+                                lista_tabela[ultimo_elemento_vazio][colunas] = "| O |"
+                                print("Peça colocada.")
+                            else:
+                                False
+                        
+                        elif (tamanho_peca != 1):
+                            ## JOGADOR 1 ## 
+                            if temp == lista_jogo[0]: #jogador 1
+                                if len(lista_pecas_especiais_j1) != 0: 
+                                    if tamanho_peca in lista_pecas_especiais_j1:
+                                        ## ESQUERDA ##
+                                        if opcao[4] == lista_sentidos[0]: #esquerda
+                                            ultimo_elemento_vazio = 1
+                                            for j in range(tamanho_peca):
+                                                for i in range(len(lista_tabela)):
+                                                    if lista_tabela[i][colunas] == "|___|":
+                                                        ultimo_elemento_vazio = i
+                                                    else:
+                                                        break
+                                                lista_tabela[ultimo_elemento_vazio][colunas] = "| X |"
+                                                colunas -= 1
+                                            lista_pecas_especiais_j1.remove(tamanho_peca)    
+                                        ## DIREITA ##
+                                        elif opcao[4] == lista_sentidos[1]: #direita
+                                            ultimo_elemento_vazio = 1
+                                            for j in range(tamanho_peca):
+                                                for i in range(len(lista_tabela)):
+                                                    if lista_tabela[i][colunas] == "|___|":
+                                                        ultimo_elemento_vazio = i
+                                                    else:
+                                                        break
+                                                lista_tabela[ultimo_elemento_vazio][colunas] = "| X |"
+                                                colunas += 1
+                                            lista_pecas_especiais_j1.remove(tamanho_peca)    
+                                    else:
+                                        print("Tamanho de peça não disponivel.")
+                                else: 
+                                    print("O jogador não apresenta peças especiais disponiveis.")
+                                    temp = lista_jogo[1]
+                            ## JOGADOR 2 ##
+                            elif temp == lista_jogo[1]: #jogador 2
+                                if len(lista_pecas_especiais_j2) != 0:
+                                    if tamanho_peca in lista_pecas_especiais_j2:
+                                        ## ESQUERDA ##
+                                        if opcao[4] == lista_sentidos[0]: #esquerda
+                                            ultimo_elemento_vazio = 1
+                                            for j in range(tamanho_peca):
+                                                for i in range(len(lista_tabela)):
+                                                    if lista_tabela[i][colunas] == "|___|":
+                                                        ultimo_elemento_vazio = i
+                                                    else:
+                                                        break
+                                                lista_tabela[ultimo_elemento_vazio][colunas] = "| O |"
+                                                colunas -= 1
+                                            lista_pecas_especiais_j2.remove(tamanho_peca)    
+                                        ## DIREITA ##
+                                        elif opcao[4] == lista_sentidos[1]: #direita
+                                            ultimo_elemento_vazio = 1
+                                            for j in range(tamanho_peca):
+                                                for i in range(len(lista_tabela)):
+                                                    if lista_tabela[i][colunas] == "|___|":
+                                                        ultimo_elemento_vazio = i
+                                                    else:
+                                                        break
+                                                lista_tabela[ultimo_elemento_vazio][colunas] = "| O |"
+                                                colunas += 1
+                                            lista_pecas_especiais_j2.remove(tamanho_peca)
+                                            print(lista_pecas_especiais_j2)
+                                    else:
+                                        print("Tamanho de peça não disponivel.")
                                 else:
-                                    break
-                            lista_tabela[ultimo_elemento_vazio][colunas] = "| X |"
-                            print("Peça colocada.")
+                                    print("O jogador não apresenta peças especiais disponiveis.")
+                                    temp = lista_jogo[0]
 
-                        elif temp == lista_jogo[1]:
-                            ultimo_elemento_vazio = 1
-                            for i in range(len(lista_tabela)):
-                                if lista_tabela[i][colunas] == "|___|":
-                                    ultimo_elemento_vazio = i
-                                else:
-                                    break
-                            lista_tabela[ultimo_elemento_vazio][colunas] = "| O |"
-                            print("Peça colocada.")
                     else:
                         print('Não é possível jogar 2 vezes de seguida')                       
                 else:
@@ -191,13 +261,7 @@ def main():
 
         elif opcao[0] == "v":                                                                                           #ver lista_tabela
             if lista_tabela != 0:
-                for i in range(colunas):
-                    print(f"    {i}", end="")
-                print()
-
                 for i in range(len(lista_tabela)):
-                    print(valor_lateral,end = ' ')
-                    valor_lateral += 1
                     for j in range(len(lista_tabela[i])):
                         print(lista_tabela[i][j],end = '')                        
                     print()
