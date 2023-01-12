@@ -2,14 +2,17 @@ from controller import *
 import os
 
 def main():
-            ########### MENU ############
     
+    ########### VARIAVEIS TEMPORARIAS ############
+
     lista_tabela = []
     lista_rj = []
     lista_pecas_especiais_j1 = []
     lista_pecas_especiais_j2 = []            
     lista_sentidos = ["e", "d"]
-    temp = 0
+    nome = 0
+    horizontal = 0
+    vertical = 0
  
     os.system("cls")
     while True: 
@@ -17,7 +20,7 @@ def main():
         opcao = input("Introduza a sua opção: ").lower().split(' ')
 
         
-            ########### INICIAR JOGO ############
+        ########### INICIAR JOGO ############
 
         if opcao[0] == "ij":   #se for iniciar jogo
             comprimento = int(opcao[3])                              
@@ -92,7 +95,7 @@ def main():
                 
             
 
-            ########### REGISTAR JOGADOR ############
+        ########### REGISTAR JOGADOR ############
 
         elif opcao[0] == "rj":    #registar jogador
             if opcao[1] not in lista_rj:    #loop que só é quebrado quando o jogador nao está na lista.
@@ -103,7 +106,7 @@ def main():
 
 
 
-            ########### ELIMINAR JOGADOR ############
+        ########### ELIMINAR JOGADOR ############
         
         elif opcao[0] == "ej":                                                                                   
             if len(lista_rj) != 0:    #verificação de número de jogadores
@@ -120,14 +123,13 @@ def main():
 
 
 
-            ########### LISTAR JOGADOR ############
+        ########### LISTAR JOGADOR ############
 
         elif opcao[0] == "lj":                                                                                                        
             pass
 
 
-
-            ########### DETALHES JOGO ############
+        ########### DETALHES JOGO ############
 
         elif opcao[0] == "dj":                                                                                          
             if len(lista_tabela) != 0:    #verifica se existe jogo em curso
@@ -159,7 +161,7 @@ def main():
 
 
 
-            ########### DESISTIR #############
+        ########### DESISTIR #############
             
         elif opcao[0] == "d":                                                                                           
             if len(lista_tabela) != 0:
@@ -195,7 +197,7 @@ def main():
                     
             
 
-            ########### COLOCAR PEÇA #############
+        ########### COLOCAR PEÇA #############
 
         elif opcao[0] == "cp":                      
             tamanho_peca = int(opcao[2])
@@ -205,8 +207,8 @@ def main():
 
                     ########## MUDANCA DE JOGADOR ##########
 
-                    if opcao[1] != temp:    #variável temporária que serve para alternar a vez dos jogadores                                                      
-                        temp = opcao[1]                    
+                    if opcao[1] != nome:    #variável nome que serve para alternar a vez dos jogadores                                                      
+                        nome = opcao[1]                    
 
                         ########## PECA UNITARIA ##########
 
@@ -214,7 +216,7 @@ def main():
 
                             ########## JOGADOR 1 ##########
 
-                            if temp == lista_jogo[0]:   
+                            if nome == lista_jogo[0]:   
                                 if lista_tabela[0][colunas] == "|___|":    #verifica se a coluna inserida está cheia
                                     ultimo_elemento_vazio = 1
                                     for i in range(len(lista_tabela)):      #loop para verificar os elementos vazios da coluna e no final inserir a jogada
@@ -227,46 +229,48 @@ def main():
 
                                     ##########  HORIZONTAL ##########
 
-                                    for i in range(len(lista_tabela)):                                                                                                                                                                          
-                                        if lista_tabela[i].count("| X |") == sequencia_vencedora:                                                                                                                                              
-                                            print("Sequência conseguida. Jogo terminado.")
-                                            lista_jogo.clear()
-                                            lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
-                                            lista_pecas_especiais_j2.clear()
-                                            lista_tabela.clear()
-                                            #Adicionar os pontos ao vencedor e o jogo jogado aos dois!
-                                        else:
-                                            pass
+                                    for i in range(len(lista_tabela)):
+                                        for j in range(len(lista_tabela[i])):    #itera todos os valores da lista em base de linhas
+                                            if horizontal != sequencia_vencedora:   #verifica se o variavel é igual a sequencia vencedora
+                                                if lista_tabela[i][j] == "| X |":
+                                                    horizontal += 1 
+                                                    if horizontal == sequencia_vencedora:   #segunda verificação
+                                                        print("Sequência conseguida. Jogo terminado.")
+                                                        lista_jogo.clear()
+                                                        lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
+                                                        lista_pecas_especiais_j2.clear()
+                                                        lista_tabela.clear()
+                                                        break
+                                                else:
+                                                    horizontal = 0
+                                        
+                                        if horizontal == sequencia_vencedora:   #serve para dar break da iteração das linhas
+                                            break
 
                                     ########## VITORIA VERTICAL ##########
 
-                                    colunas = [[lista_tabela[i][j] for i in range(len(lista_tabela))] for j in range(len(lista_tabela))]        
-                                    for coluna in colunas:
-                                        if coluna.count("| X |") == sequencia_vencedora:
-                                            print("Sequência conseguida. Jogo terminado.")
-                                            lista_jogo.clear()
-                                            lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
-                                            lista_pecas_especiais_j2.clear()
-                                            lista_tabela.clear()
-                                            #Adicionar os pontos ao vencedor e o jogo jogado aos dois!
-                                        else:
-                                            pass
+                                    for j in range(len(lista_tabela[0])):
+                                        for i in range(len(lista_tabela)):  #itera todos os valores da lista em base de colunas
+                                            if vertical != sequencia_vencedora:     #verifica se o variavel é igual a sequencia vencedora
+                                                if lista_tabela[i][j] == "| X |":
+                                                    vertical += 1 
+                                                    if vertical == sequencia_vencedora:     #segunda verificação
+                                                        print("Sequência conseguida. Jogo terminado.")
+                                                        lista_jogo.clear()
+                                                        lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
+                                                        lista_pecas_especiais_j2.clear()
+                                                        lista_tabela.clear()
+                                                        break
+                                                        #Adicionar os pontos ao vencedor e o jogo jogado aos dois!
+                                                else:
+                                                    vertical = 0
+                                        if vertical == sequencia_vencedora:   #serve para dar break da iteração das colunas
+                                            break
                                     
                                     ########## VITORIA DIAGONAL ##########
-
-                                    diagonal_principal = [lista_tabela[i][i] for i in range(len(lista_tabela))]                  
-                                    if diagonal_principal.count("| X |") == sequencia_vencedora:
-                                        print("Sequência conseguida. Jogo terminado.")
-                                        lista_jogo.clear()
-                                        lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
-                                        lista_pecas_especiais_j2.clear()
-                                        lista_tabela.clear()
-                                        #Adicionar os pontos ao vencedor e o jogo jogado aos dois!
-                                    else:
-                                        pass
                                     
-                                    diagonal_secundaria = [lista_tabela[i][len(lista_tabela) - 1 - i] for i in range(len(lista_tabela))]     
-                                    if diagonal_secundaria.count("| X |") == sequencia_vencedora:
+                                    diagonal = [lista_tabela[i][len(lista_tabela) - 1 - i] for i in range(len(lista_tabela))]     
+                                    if diagonal.count("| X |") == sequencia_vencedora:
                                         print("Sequência conseguida. Jogo terminado.")
                                         lista_jogo.clear()
                                         lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
@@ -278,11 +282,11 @@ def main():
                                         pass
                                 else:
                                     print("Posição irregular.")
-                                    temp = lista_jogo[1]    #mudar o valor do temp para o jogador adversário para que o jogador posso tentar denovo 
+                                    nome = lista_jogo[1]    #mudar o valor do nome para o jogador adversário para que o jogador posso tentar denovo 
 
                             ########## JOGADOR 2 ##########
 
-                            elif temp == lista_jogo[1]:
+                            elif nome == lista_jogo[1]:
                                 if lista_tabela[0][colunas] == "|___|":    #verifica se a coluna inserida está cheia 
                                     ultimo_elemento_vazio = 1
                                     for i in range(len(lista_tabela)):      #loop para verificar os elementos vazios da coluna e no final inserir a jogada
@@ -296,46 +300,48 @@ def main():
 
                                     ########## VITORIA HORIZONTAL ##########
 
-                                    for i in range(len(lista_tabela)):                                                                                                                                                                          
-                                        if lista_tabela[i].count("| O |") == sequencia_vencedora:                                                                                                                                              
-                                            print("Sequência conseguida. Jogo terminado.")
-                                            lista_jogo.clear()
-                                            lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
-                                            lista_pecas_especiais_j2.clear()
-                                            lista_tabela.clear()
-                                            #Adicionar os pontos ao vencedor e o jogo jogado aos dois!
-                                        else:
-                                            pass
+                                    for i in range(len(lista_tabela)):      #itera todos os valores da lista em base das linhas
+                                        for j in range(len(lista_tabela[i])):
+                                            if horizontal != sequencia_vencedora:   #verifica se o variavel é igual a sequencia vencedora
+                                                if lista_tabela[i][j] == "| O |":
+                                                    horizontal += 1 
+                                                    if horizontal == sequencia_vencedora:   #segunda verificação
+                                                        print("Sequência conseguida. Jogo terminado.")
+                                                        lista_jogo.clear()
+                                                        lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
+                                                        lista_pecas_especiais_j2.clear()
+                                                        lista_tabela.clear()
+                                                        break
+                                                else:
+                                                    horizontal = 0
+                                        
+                                        if horizontal == sequencia_vencedora:   #serve para dar break da iteração das linhas
+                                            break
                                     
                                     ########## VITORIA VERTICAL ##########
 
-                                    colunas = [[lista_tabela[i][j] for i in range(len(lista_tabela))] for j in range(len(lista_tabela))]        
-                                    for coluna in colunas:
-                                        if coluna.count("| O |") == sequencia_vencedora:
-                                            print("Sequência conseguida. Jogo terminado.")
-                                            lista_jogo.clear()
-                                            lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
-                                            lista_pecas_especiais_j2.clear()
-                                            lista_tabela.clear()
-                                            #Adicionar os pontos ao vencedor e o jogo jogado aos dois!
-                                        else:
-                                            pass
+                                    for j in range(len(lista_tabela[0])):   #itera todos os valores da lista em base das colunas
+                                        for i in range(len(lista_tabela)):
+                                            if vertical != sequencia_vencedora:     #verifica se o variavel é igual a sequencia vencedora
+                                                if lista_tabela[i][j] == "| X |":
+                                                    vertical += 1 
+                                                    if vertical == sequencia_vencedora:     #segunda verificação
+                                                        print("Sequência conseguida. Jogo terminado.")
+                                                        lista_jogo.clear()
+                                                        lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
+                                                        lista_pecas_especiais_j2.clear()
+                                                        lista_tabela.clear()
+                                                        break
+                                                        #Adicionar os pontos ao vencedor e o jogo jogado aos dois!
+                                                else:
+                                                    vertical = 0
+                                        if vertical == sequencia_vencedora:    #serve para dar break da iteração das colunas
+                                            break
                                     
                                     ########## VITORIA DIAGONAL ##########
 
-                                    diagonal_principal = [lista_tabela[i][i] for i in range(len(lista_tabela))]                  
-                                    if diagonal_principal.count("| O |") == sequencia_vencedora:
-                                        print("Sequência conseguida. Jogo terminado.")
-                                        lista_jogo.clear()
-                                        lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
-                                        lista_pecas_especiais_j2.clear()
-                                        lista_tabela.clear()
-                                        #Adicionar os pontos ao vencedor e o jogo jogado aos dois!
-                                    else:
-                                        pass
-
-                                    diagonal_secundaria = [lista_tabela[i][len(lista_tabela) - 1 - i] for i in range(len(lista_tabela))]     
-                                    if diagonal_secundaria.count("| O |") == sequencia_vencedora:
+                                    diagonal = [lista_tabela[i][len(lista_tabela) - 1 - i] for i in range(len(lista_tabela))]     
+                                    if diagonal.count("| O |") == sequencia_vencedora:
                                         print("Sequência conseguida. Jogo terminado.")
                                         lista_jogo.clear()
                                         lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
@@ -346,7 +352,7 @@ def main():
                                         pass
                                 else:
                                     print("Posição irregular.")
-                                    temp = lista_jogo[0]    #mudar o valor do temp para o jogador adversário para que o jogador posso tentar denovo 
+                                    nome = lista_jogo[0]    #mudar o valor do nome para o jogador adversário para que o jogador posso tentar denovo 
 
 
                         ########## PEÇA ESPECIAL ##########
@@ -355,7 +361,7 @@ def main():
 
                             ########## JOGADOR 1 ########## 
 
-                            if temp == lista_jogo[0]: 
+                            if nome == lista_jogo[0]: 
                                 if len(lista_pecas_especiais_j1) != 0:    #verifica se o jogador tem peças especiais 
                                     if tamanho_peca in lista_pecas_especiais_j1:    #verifica se a peça requesitada existe dentro da lista de peças especiais
 
@@ -377,46 +383,48 @@ def main():
 
                                                 ########## VITORIA HORIZONTAL ##########
 
-                                                for i in range(len(lista_tabela)):                                                                                                                                                                           
-                                                    if lista_tabela[i].count("| X |") == sequencia_vencedora:                                                                                                                                              
-                                                        print("Sequência conseguida. Jogo terminado.")
-                                                        lista_jogo.clear()
-                                                        lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
-                                                        lista_pecas_especiais_j2.clear()
-                                                        lista_tabela.clear()
-                                                        #Adicionar os pontos ao vencedor e o jogo jogado aos dois!
-                                                    else:
-                                                        pass
+                                                for i in range(len(lista_tabela)):
+                                                    for j in range(len(lista_tabela[i])):   #itera todos os valores da lista
+                                                        if horizontal != sequencia_vencedora:   #verifica se o variavel é igual a sequencia vencedora
+                                                            if lista_tabela[i][j] == "| X |":
+                                                                horizontal += 1 
+                                                                if horizontal == sequencia_vencedora:   #segunda verificação
+                                                                    print("Sequência conseguida. Jogo terminado.")
+                                                                    lista_jogo.clear()
+                                                                    lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
+                                                                    lista_pecas_especiais_j2.clear()
+                                                                    lista_tabela.clear()
+                                                                    break
+                                                            else:
+                                                                horizontal = 0
+                                        
+                                                    if horizontal == sequencia_vencedora:   #serve para dar break da iteração das linhas
+                                                        break
 
                                                 ########## VITORIA VERTICAL ##########
                                                     
-                                                colunas = [[lista_tabela[i][j] for i in range(len(lista_tabela))] for j in range(len(lista_tabela))]        
-                                                for coluna in colunas:
-                                                    if coluna.count("| X |") == sequencia_vencedora:
-                                                        print("Sequência conseguida. Jogo terminado.")
-                                                        lista_jogo.clear()
-                                                        lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
-                                                        lista_pecas_especiais_j2.clear()
-                                                        lista_tabela.clear()
-                                                        #Adicionar os pontos ao vencedor e o jogo jogado aos dois!!!!!por acabar
-                                                    else:
-                                                        pass
+                                                for j in range(len(lista_tabela[0])):   #itera todos os valores da lista em base das colunas
+                                                    for i in range(len(lista_tabela)):
+                                                        if vertical != sequencia_vencedora:     #verifica se o variavel é igual a sequencia vencedora
+                                                            if lista_tabela[i][j] == "| X |":
+                                                                vertical += 1 
+                                                                if vertical == sequencia_vencedora:    #segunda verificação
+                                                                    print("Sequência conseguida. Jogo terminado.")
+                                                                    lista_jogo.clear()
+                                                                    lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
+                                                                    lista_pecas_especiais_j2.clear()
+                                                                    lista_tabela.clear()
+                                                                    break
+                                                                    #Adicionar os pontos ao vencedor e o jogo jogado aos dois!
+                                                            else:
+                                                                vertical = 0
+                                                    if vertical == sequencia_vencedora:    #serve para dar break da iteração das colunas
+                                                        break
                                                 
                                                 ########## VITORIA DIAGONAL ##########
 
-                                                diagonal_principal = [lista_tabela[i][i] for i in range(len(lista_tabela))]                  
-                                                if diagonal_principal.count("| X |") == sequencia_vencedora:
-                                                    print("Sequência conseguida. Jogo terminado.")
-                                                    lista_jogo.clear()
-                                                    lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
-                                                    lista_pecas_especiais_j2.clear()
-                                                    lista_tabela.clear()
-                                                    #Adicionar os pontos ao vencedor e o jogo jogado aos dois!!!!!por acabar
-                                                else:
-                                                    pass
-
-                                                diagonal_secundaria = [lista_tabela[i][len(lista_tabela) - 1 - i] for i in range(len(lista_tabela))]     
-                                                if diagonal_secundaria.count("| X |") == sequencia_vencedora:
+                                                diagonal = [lista_tabela[i][len(lista_tabela) - 1 - i] for i in range(len(lista_tabela))]     
+                                                if diagonal.count("| X |") == sequencia_vencedora:
                                                     print("Sequência conseguida. Jogo terminado.")
                                                     lista_jogo.clear()
                                                     lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
@@ -425,10 +433,15 @@ def main():
                                                     #Adicionar os pontos ao vencedor e o jogo jogado aos dois!
                                                 else:
                                                     pass 
-                                                lista_pecas_especiais_j1.remove(tamanho_peca)    #limpar a peça especial usada
+                                                
+                                                if len(lista_tabela) != 0 and (tamanho_peca in lista_pecas_especiais_j1): 
+                                                    lista_pecas_especiais_j1.remove(tamanho_peca)    #limpar a peça especial usada
+                                                else:
+                                                    pass
+                                            
                                             else:
                                                 print("Posição irregular.")
-                                                temp = lista_jogo[1]    #mudar o valor do temp para o jogador adversário para que o jogador posso tentar denovo   
+                                                nome = lista_jogo[1]    #mudar o valor do nome para o jogador adversário para que o jogador posso tentar denovo   
                                                    
                                         ########## DIREITA ##########
                                         
@@ -448,35 +461,48 @@ def main():
 
                                                 ########## VITORIA HORIZONTAL ##########
 
-                                                for i in range(len(lista_tabela)):                                                                                                                                                                          
-                                                    if lista_tabela[i].count("| X |") == sequencia_vencedora:                                                                                                                                              
-                                                        print("Sequência conseguida. Jogo terminado.")
-                                                        lista_jogo.clear()
-                                                        lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
-                                                        lista_pecas_especiais_j2.clear()
-                                                        lista_tabela.clear()
-                                                        #Adicionar os pontos ao vencedor e o jogo jogado aos dois!!!!!por acabar
-                                                    else:
-                                                        pass
+                                                for i in range(len(lista_tabela)):     
+                                                    for j in range(len(lista_tabela[i])):       #itera todos os valores da lista em base das linhas
+                                                        if horizontal != sequencia_vencedora:   #verifica se o variavel é igual a sequencia vencedora
+                                                            if lista_tabela[i][j] == "| X |":
+                                                                horizontal += 1 
+                                                                if horizontal == sequencia_vencedora:   #segunda verificação
+                                                                    print("Sequência conseguida. Jogo terminado.")
+                                                                    lista_jogo.clear()
+                                                                    lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
+                                                                    lista_pecas_especiais_j2.clear()
+                                                                    lista_tabela.clear()
+                                                                    break
+                                                            else:
+                                                                horizontal = 0  
+                                                    
+                                                    if horizontal == sequencia_vencedora:   #serve para dar break da iteração das linhas
+                                                        break
                                                 
                                                 ########## VITORIA VERTICAL ##########
 
-                                                colunas = [[lista_tabela[i][j] for i in range(len(lista_tabela))] for j in range(len(lista_tabela))]       
-                                                for coluna in colunas:
-                                                    if coluna.count("| X |") == sequencia_vencedora:
-                                                        print("Sequência conseguida. Jogo terminado.")
-                                                        lista_jogo.clear()
-                                                        lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
-                                                        lista_pecas_especiais_j2.clear()
-                                                        lista_tabela.clear()
-                                                        #Adicionar os pontos ao vencedor e o jogo jogado aos dois!
-                                                    else:
-                                                        pass
+                                                for j in range(len(lista_tabela[0])):   #itera todos os valores da lista em base das colunas
+                                                    for i in range(len(lista_tabela)):
+                                                        if vertical != sequencia_vencedora:     #verifica se o variavel é igual a sequencia vencedora
+                                                            if lista_tabela[i][j] == "| X |":
+                                                                vertical += 1 
+                                                                if vertical == sequencia_vencedora:   #segunda verificação  
+                                                                    print("Sequência conseguida. Jogo terminado.")  
+                                                                    lista_jogo.clear()
+                                                                    lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
+                                                                    lista_pecas_especiais_j2.clear()
+                                                                    lista_tabela.clear()
+                                                                    break
+                                                                    #Adicionar os pontos ao vencedor e o jogo jogado aos dois!
+                                                            else:
+                                                                vertical = 0
+                                                    if vertical == sequencia_vencedora:     #serve para dar break da iteração das colunas
+                                                        break
                                                 
                                                 ########## VITORIA DIAGONAL ##########
 
-                                                diagonal_principal = [lista_tabela[i][i] for i in range(len(lista_tabela))]                  
-                                                if diagonal_principal.count("| X |") == sequencia_vencedora:
+                                                diagonal = [lista_tabela[i][len(lista_tabela) - 1 - i] for i in range(len(lista_tabela))]     
+                                                if diagonal.count("| X |") == sequencia_vencedora:
                                                     print("Sequência conseguida. Jogo terminado.")
                                                     lista_jogo.clear()
                                                     lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
@@ -485,31 +511,24 @@ def main():
                                                     #Adicionar os pontos ao vencedor e o jogo jogado aos dois!
                                                 else:
                                                     pass
-
-                                                diagonal_secundaria = [lista_tabela[i][len(lista_tabela) - 1 - i] for i in range(len(lista_tabela))]     
-                                                if diagonal_secundaria.count("| X |") == sequencia_vencedora:
-                                                    print("Sequência conseguida. Jogo terminado.")
-                                                    lista_jogo.clear()
-                                                    lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
-                                                    lista_pecas_especiais_j2.clear()
-                                                    lista_tabela.clear()
-                                                    #Adicionar os pontos ao vencedor e o jogo jogado aos dois!
+                                                
+                                                if len(lista_tabela) != 0 and (tamanho_peca in lista_pecas_especiais_j1): 
+                                                    lista_pecas_especiais_j1.remove(tamanho_peca)    #limpar a peça especial usada
                                                 else:
                                                     pass
-                                                lista_pecas_especiais_j1.remove(tamanho_peca)    #limpar a peça especial usada
                                             else:
                                                 print("Posição irregular.")
-                                                temp = lista_jogo[1]    #mudar o valor do temp para o jogador adversário para que o jogador posso tentar denovo    
+                                                nome = lista_jogo[1]    #mudar o valor do nome para o jogador adversário para que o jogador posso tentar denovo    
                                     else:
                                         print("Tamanho de peça não disponivel.")
-                                        temp = lista_jogo[1]    #mudar o valor do temp para o jogador adversário para que o jogador posso tentar denovo
+                                        nome = lista_jogo[1]    #mudar o valor do nome para o jogador adversário para que o jogador posso tentar denovo
                                 else: 
                                     print("O jogador não apresenta peças especiais disponiveis.")
-                                    temp = lista_jogo[1]    #mudar o valor do temp para o jogador adversário para que o jogador posso tentar denovo
+                                    nome = lista_jogo[1]    #mudar o valor do nome para o jogador adversário para que o jogador posso tentar denovo
 
                             ########## JOGADOR 2 ##########
 
-                            elif temp == lista_jogo[1]: 
+                            elif nome == lista_jogo[1]: 
                                 if len(lista_pecas_especiais_j2) != 0:     #verifica se o jogador tem peças especiais
                                     if tamanho_peca in lista_pecas_especiais_j2:    #verifica se a peça requesitada existe dentro da lista de peças especiais
 
@@ -531,46 +550,48 @@ def main():
 
                                                 ########## VITORIA HORIZONTAL ##########
                                                 
-                                                for i in range(len(lista_tabela)):                                                                                                                                                                           
-                                                    if lista_tabela[i].count("| O |") == sequencia_vencedora:                                                                                                                                              
-                                                        print("Sequência conseguida. Jogo terminado.")
-                                                        lista_jogo.clear()
-                                                        lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
-                                                        lista_pecas_especiais_j2.clear()
-                                                        lista_tabela.clear()
-                                                        #Adicionar os pontos ao vencedor e o jogo jogado aos dois!
-                                                    else:
-                                                        pass
+                                                for i in range(len(lista_tabela)):
+                                                    for j in range(len(lista_tabela[i])):   #itera todos os valores da lista em base das linhas
+                                                        if horizontal != sequencia_vencedora:   #verifica se o variavel é igual a sequencia vencedora
+                                                            if lista_tabela[i][j] == "| O |":
+                                                                horizontal += 1 
+                                                                if horizontal == sequencia_vencedora:  #segunda verificação
+                                                                    print("Sequência conseguida. Jogo terminado.")
+                                                                    lista_jogo.clear()
+                                                                    lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
+                                                                    lista_pecas_especiais_j2.clear()
+                                                                    lista_tabela.clear()
+                                                                    break
+                                                            else:
+                                                                horizontal = 0
+                                                    
+                                                    if horizontal == sequencia_vencedora: #serve para dar break da iteração das linhas  
+                                                        break
                                                 
                                                 ########## VITORIA VERTICAL ##########
                                                 
-                                                colunas = [[lista_tabela[i][j] for i in range(len(lista_tabela))] for j in range(len(lista_tabela))]        
-                                                for coluna in colunas:
-                                                    if coluna.count("| O |") == sequencia_vencedora:
-                                                        print("Sequência conseguida. Jogo terminado.")
-                                                        lista_jogo.clear()
-                                                        lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
-                                                        lista_pecas_especiais_j2.clear()
-                                                        lista_tabela.clear()
-                                                        #Adicionar os pontos ao vencedor e o jogo jogado aos dois!
-                                                    else:
-                                                        pass
+                                                for j in range(len(lista_tabela[0])):
+                                                    for i in range(len(lista_tabela)):     #itera todos os valores da lista em base das colunas
+                                                        if vertical != sequencia_vencedora:     #verifica se o variavel é igual a sequencia vencedora
+                                                            if lista_tabela[i][j] == "| X |":
+                                                                vertical += 1 
+                                                                if vertical == sequencia_vencedora:    #segunda verificação
+                                                                    print("Sequência conseguida. Jogo terminado.")
+                                                                    lista_jogo.clear()
+                                                                    lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
+                                                                    lista_pecas_especiais_j2.clear()
+                                                                    lista_tabela.clear()
+                                                                    break
+                                                                    #Adicionar os pontos ao vencedor e o jogo jogado aos dois!
+                                                            else:
+                                                                vertical = 0
+                                                    if vertical == sequencia_vencedora:   #serve para dar break da iteração das linhas
+                                                        break
                                                 
                                                 ########## VITORIA DIAGONAL ##########
-                                                
-                                                diagonal_principal = [lista_tabela[i][i] for i in range(len(lista_tabela))]                  
-                                                if diagonal_principal.count("| O |") == sequencia_vencedora:
-                                                    print("Sequência conseguida. Jogo terminado.")
-                                                    lista_jogo.clear()
-                                                    lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
-                                                    lista_pecas_especiais_j2.clear()
-                                                    lista_tabela.clear()
-                                                    #Adicionar os pontos ao vencedor e o jogo jogado aos dois!
-                                                else:
-                                                    pass
-
-                                                diagonal_secundaria = [lista_tabela[i][len(lista_tabela) - 1 - i] for i in range(len(lista_tabela))]     
-                                                if diagonal_secundaria.count("| O |") == sequencia_vencedora:
+                                            
+                                                diagonal = [lista_tabela[i][len(lista_tabela) - 1 - i] for i in range(len(lista_tabela))]     
+                                                if diagonal.count("| O |") == sequencia_vencedora:
                                                     print("Sequência conseguida. Jogo terminado.")
                                                     lista_jogo.clear()
                                                     lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
@@ -580,10 +601,13 @@ def main():
                                                 else:
                                                     pass
                                 
-                                                lista_pecas_especiais_j2.remove(tamanho_peca)   #limpar a peça especial usada
+                                                if len(lista_tabela) != 0 and (tamanho_peca in lista_pecas_especiais_j2): 
+                                                    lista_pecas_especiais_j2.remove(tamanho_peca)    #limpar a peça especial usada
+                                                else:
+                                                    pass
                                             else:
                                                 print("Posição irregular.")
-                                                temp = lista_jogo[0]    #mudar o valor do temp para o jogador adversário para que o jogador posso tentar denovo   
+                                                nome = lista_jogo[0]    #mudar o valor do nome para o jogador adversário para que o jogador posso tentar denovo   
 
                                         ########## DIREITA ##########
                                         
@@ -603,35 +627,49 @@ def main():
 
                                                 ########## VITORIA HORIZONTAL ##########
 
-                                                for i in range(len(lista_tabela)):                                                                                                                                                                          
-                                                    if lista_tabela[i].count("| O |") == sequencia_vencedora:                                                                                                                                              
-                                                        print("Sequência conseguida. Jogo terminado.")
-                                                        lista_jogo.clear()
-                                                        lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
-                                                        lista_pecas_especiais_j2.clear()
-                                                        lista_tabela.clear()
-                                                        #Adicionar os pontos ao vencedor e o jogo jogado aos dois!
-                                                    else:
-                                                        pass
+                                                for i in range(len(lista_tabela)):
+                                                    for j in range(len(lista_tabela[i])):   #itera todos os valores da lista em base das linhas
+                                                        if horizontal != sequencia_vencedora:   #verifica se o variavel é igual a sequencia vencedora
+                                                            if lista_tabela[i][j] == "| O |":
+                                                                horizontal += 1 
+                                                                if horizontal == sequencia_vencedora:   #segunda verificação
+                                                                    print("Sequência conseguida. Jogo terminado.")
+                                                                    lista_jogo.clear()
+                                                                    lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
+                                                                    lista_pecas_especiais_j2.clear()
+                                                                    lista_tabela.clear()
+                                                                    break
+                                                                    #Adicionar os pontos ao vencedor e o jogo jogado aos dois!
+                                                            else:
+                                                                horizontal = 0
+                                                    
+                                                    if horizontal == sequencia_vencedora:   #serve para dar break da iteração das linhas
+                                                        break
                                                 
                                                 ########## VITORIA VERTICAL ##########
 
-                                                colunas = [[lista_tabela[i][j] for i in range(len(lista_tabela))] for j in range(len(lista_tabela))]        
-                                                for coluna in colunas:
-                                                    if coluna.count("| O |") == sequencia_vencedora:
-                                                        print("Sequência conseguida. Jogo terminado.")
-                                                        lista_jogo.clear()
-                                                        lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
-                                                        lista_pecas_especiais_j2.clear()
-                                                        lista_tabela.clear()
-                                                        #Adicionar os pontos ao vencedor e o jogo jogado aos dois!
-                                                    else:
-                                                        pass
+                                                for j in range(len(lista_tabela[0])):   #itera todos os valores da lista em base das colunas
+                                                    for i in range(len(lista_tabela)):
+                                                        if vertical != sequencia_vencedora:     #verifica se o variavel é igual a sequencia vencedora
+                                                            if lista_tabela[i][j] == "| X |":
+                                                                vertical += 1 
+                                                                if vertical == sequencia_vencedora:     #segunda verificação
+                                                                    print("Sequência conseguida. Jogo terminado.")
+                                                                    lista_jogo.clear()
+                                                                    lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
+                                                                    lista_pecas_especiais_j2.clear()
+                                                                    lista_tabela.clear()
+                                                                    break
+                                                                    #Adicionar os pontos ao vencedor e o jogo jogado aos dois!
+                                                            else:
+                                                                vertical = 0
+                                                    if vertical == sequencia_vencedora:     #serve para dar break da iteração das colunas
+                                                        break
                                                 
-                                                ########## VITORIA VERTICAL ##########
+                                                ########## VITORIA DIAGONAL ##########
 
-                                                diagonal_principal = [lista_tabela[i][i] for i in range(len(lista_tabela))]                 
-                                                if diagonal_principal.count("| O |") == sequencia_vencedora:
+                                                diagonal = [lista_tabela[i][len(lista_tabela) - 1 - i] for i in range(len(lista_tabela))]     
+                                                if diagonal.count("| O |") == sequencia_vencedora:
                                                     print("Sequência conseguida. Jogo terminado.")
                                                     lista_jogo.clear()
                                                     lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
@@ -641,27 +679,19 @@ def main():
                                                 else:
                                                     pass
 
-                                                diagonal_secundaria = [lista_tabela[i][len(lista_tabela) - 1 - i] for i in range(len(lista_tabela))]     
-                                                if diagonal_secundaria.count("| O |") == sequencia_vencedora:
-                                                    print("Sequência conseguida. Jogo terminado.")
-                                                    lista_jogo.clear()
-                                                    lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
-                                                    lista_pecas_especiais_j2.clear()
-                                                    lista_tabela.clear()
-                                                    #Adicionar os pontos ao vencedor e o jogo jogado aos dois!
+                                                if len(lista_tabela) != 0 and (tamanho_peca in lista_pecas_especiais_j2): 
+                                                    lista_pecas_especiais_j2.remove(tamanho_peca)    #limpar a peça especial usada
                                                 else:
                                                     pass
-
-                                                lista_pecas_especiais_j2.remove(tamanho_peca)    #limpar a peça especial usada
                                             else:
                                                 print("Posição irregular.")
-                                                temp = lista_jogo[0]    #mudar o valor do temp para o jogador adversário para que o jogador posso tentar denovo
+                                                nome = lista_jogo[0]    #mudar o valor do nome para o jogador adversário para que o jogador posso tentar denovo
                                     else:
                                         print("Tamanho de peça não disponivel.")
-                                        temp = lista_jogo[0]    #mudar o valor do temp para o jogador adversário para que o jogador posso tentar denovo
+                                        nome = lista_jogo[0]    #mudar o valor do nome para o jogador adversário para que o jogador posso tentar denovo
                                 else:
                                     print("O jogador não apresenta peças especiais disponiveis.")
-                                    temp = lista_jogo[0]    #mudar o valor do temp para o jogador adversário para que o jogador posso tentar denovo
+                                    nome = lista_jogo[0]    #mudar o valor do nome para o jogador adversário para que o jogador posso tentar denovo
                     else:
                         print('Não é possível jogar 2 vezes de seguida')                       
                 else:
