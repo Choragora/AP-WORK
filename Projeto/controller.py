@@ -50,4 +50,5 @@ def pecas_especiais(peca, lista_pecas_especiais_j1, lista_pecas_especiais_j2):
 #           ultimo_elemento_vazio = i
 #       else:
 #           break
-#   lista_tabela[ultimo_elemento_vazio][colunas] = "| O |"                                      
+#   lista_tabela[ultimo_elemento_vazio][colunas] = "| O |"     
+                                 
