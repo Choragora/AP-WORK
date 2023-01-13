@@ -6,16 +6,17 @@ def main():
     ########### VARIAVEIS TEMPORARIAS ############
 
     lista_tabela = []
-    lista_rj = []
+    lista_rj = ler_ficheiro_json("jogadores_json")
     lista_pecas_especiais_j1 = []
     lista_pecas_especiais_j2 = []            
     lista_sentidos = ["e", "d"]
     nome = 0
     horizontal = 0
     vertical = 0
- 
+
     os.system("cls")
     while True: 
+        
         
         opcao = input("Introduza a sua opção: ").lower().split(' ')
 
@@ -33,8 +34,9 @@ def main():
 
                     ########## NOMES ##########
 
-                    if (opcao[1] in lista_rj) and (opcao[2] in lista_rj):    #verifica se os jogadores estao registados
-                        nome_jogadores_ij(opcao[1], opcao[2], lista_jogo)
+                    if verificar_nomes(lista_rj, opcao[1]) == 1 and verificar_nomes(lista_rj, opcao[2]) == 2:
+                        lista_jogo.append(opcao[1])
+                        lista_jogo.append(opcao[2])
 
                         ########## DIMENSOES ##########
 
@@ -98,9 +100,11 @@ def main():
         ########### REGISTAR JOGADOR ############
 
         elif opcao[0] == "rj":    #registar jogador
-            if opcao[1] not in lista_rj:    #loop que só é quebrado quando o jogador nao está na lista.
-                registar_jogador(opcao[1], lista_rj)    #registar jogadores, adicionando a lista de rj
+            if verificar_nomes(lista_rj, opcao[1]) == False:    #loop que só é quebrado quando o jogador nao está na lista.
+                registar_jogador(opcao[1], lista_rj)   #registar jogadores, adicionando a lista de rj
+                escrever_ficheiro_json("jogadores_json", lista_rj)
                 print("Jogador registado com sucesso.")
+                print(lista_rj)
             else:
                 print("Jogador existente.")
 
