@@ -14,6 +14,8 @@ def main():
     nome = 0
     horizontal = 0
     vertical = 0
+    diagonal = 0
+    diagonal_invertida = 0
     nome_vencedor = 0
     nome_vencedor_desistencia = 0
     nome_desistente = 0
@@ -29,6 +31,10 @@ def main():
         ########### INICIAR JOGO ############
 
         if opcao[0] == "ij":   #se for iniciar jogo
+            horizontal = 0
+            vertical = 0
+            diagonal = 0
+            diagonal_invertida = 0
             comprimento = int(opcao[3])                              
             altura = int(opcao[4]) 
             sequencia_vencedora = int(opcao[5])
@@ -300,25 +306,71 @@ def main():
                                                 break
                                     
                                     ########## VITORIA DIAGONAL ##########
-                                    
+
                                     if horizontal != sequencia_vencedora and vertical != sequencia_vencedora:
-                                        diagonal = [lista_tabela[i][len(lista_tabela) - 1 - i] for i in range(len(lista_tabela))]     
-                                        if diagonal.count("| X |") == sequencia_vencedora:
-                                            nome_vencedor = nome    #o nome vencedor ganha o valor do ultimo a jogar
-                                            lista_jogo.remove(nome_vencedor)    #remove o jogador que ganhou
-                                            nome_perdedor = lista_jogo[0]   #para que possamos pegar o valor do jogador que perdeu
-                                            adicionar_pontos(lista_rj, nome_vencedor)
-                                            adicionar_jogos(lista_rj, nome_vencedor)
-                                            adicionar_jogos(lista_rj, nome_perdedor) 
-                                            guardar_ficheiro_json("jogadores.json", lista_rj)
-                                            print("Sequência conseguida. Jogo terminado.")
-                                            lista_jogo.clear()
-                                            lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
-                                            lista_pecas_especiais_j2.clear()
-                                            lista_tabela.clear()
-                                            
-                                        else:
-                                            pass
+                                        for i in range(len(lista_tabela)):
+                                            for j in range(len(lista_tabela[i])):
+                                                if lista_tabela[i][j] == "| X |":
+                                                    for k in range(1,sequencia_vencedora):
+                                                        if i+k < len(lista_tabela) and j+k < len(lista_tabela[i]) and lista_tabela[i+k][j+k] == "| X |":
+                                                            diagonal +=1
+                                                            if diagonal == sequencia_vencedora-1:
+                                                                nome_perdedor = lista_jogo[0] 
+                                                                nome_vencedor = nome    #o nome vencedor ganha o valor do ultimo a jogar
+                                                                lista_jogo.remove(nome_vencedor)    #remove o jogador que ganhou
+                                                                nome_perdedor = lista_jogo[0]   #para que possamos pegar o valor do jogador que perdeu
+                                                                adicionar_pontos(lista_rj, nome_vencedor)
+                                                                adicionar_jogos(lista_rj, nome_vencedor)
+                                                                adicionar_jogos(lista_rj, nome_perdedor) 
+                                                                guardar_ficheiro_json("jogadores.json", lista_rj)
+                                                                print("Sequência conseguida. Jogo terminado.")
+                                                                lista_jogo.clear()
+                                                                lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
+                                                                lista_pecas_especiais_j2.clear()
+                                                                lista_tabela.clear()
+                                                                break #break k
+                                                        else:
+                                                            diagonal = 0
+                                                            break
+                                                    
+                                                    if diagonal == sequencia_vencedora: #break j
+                                                        break
+
+                                            if diagonal == sequencia_vencedora: #breaj i
+                                                break
+
+                                        if horizontal != sequencia_vencedora and vertical != sequencia_vencedora and diagonal != sequencia_vencedora:
+                                            for i in range(len(lista_tabela)-1, -1, -1):
+                                                for j in range(len(lista_tabela[i])-1, -1, -1):
+                                                    if lista_tabela[i][j] == "| X |":
+                                                        diagonal_invertida = 0
+                                                        for k in range(1, sequencia_vencedora):
+                                                            if i-k >= 0 and j+k < len(lista_tabela[i]) and lista_tabela[i-k][j+k] == "| X |":
+                                                                diagonal_invertida += 1
+                                                                if diagonal_invertida == sequencia_vencedora-1:
+                                                                    nome_perdedor = lista_jogo[0]
+                                                                    nome_vencedor = nome    #o nome vencedor ganha o valor do ultimo a jogar
+                                                                    lista_jogo.remove(nome_vencedor)    #remove o jogador que ganhou
+                                                                    nome_perdedor = lista_jogo[0]   #para que possamos pegar o valor do jogador que perdeu
+                                                                    adicionar_pontos(lista_rj, nome_vencedor)
+                                                                    adicionar_jogos(lista_rj, nome_vencedor)
+                                                                    adicionar_jogos(lista_rj, nome_perdedor) 
+                                                                    guardar_ficheiro_json("jogadores.json", lista_rj)
+                                                                    print("Sequência conseguida. Jogo terminado.")
+                                                                    lista_jogo.clear()
+                                                                    lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
+                                                                    lista_pecas_especiais_j2.clear()
+                                                                    lista_tabela.clear()
+                                                                    break #break k
+                                                            else:
+                                                                diagonal_invertida = 0
+                                                                break
+
+                                                        if diagonal_invertida == sequencia_vencedora: #break j
+                                                            break
+                                                        
+                                                if diagonal_invertida == sequencia_vencedora: #break i
+                                                    break
                                 else:
                                     print("Posição irregular.")
                                     nome = lista_jogo[1]    #mudar o valor do nome para o jogador adversário para que o jogador posso tentar denovo 
@@ -370,7 +422,7 @@ def main():
                                         for j in range(len(lista_tabela[0])):   #itera todos os valores da lista em base das colunas
                                             for i in range(len(lista_tabela)):
                                                 if vertical != sequencia_vencedora:     #verifica se o variavel é igual a sequencia vencedora
-                                                    if lista_tabela[i][j] == "| X |":
+                                                    if lista_tabela[i][j] == "| O |":
                                                         vertical += 1 
                                                         if vertical == sequencia_vencedora:     #segunda verificação
                                                             nome_vencedor = nome    #o nome vencedor ganha o valor do ultimo a jogar
@@ -395,23 +447,70 @@ def main():
                                     ########## VITORIA DIAGONAL ##########
                                     
                                     if horizontal != sequencia_vencedora and vertical != sequencia_vencedora:
-                                        diagonal = [lista_tabela[i][len(lista_tabela) - 1 - i] for i in range(len(lista_tabela))]     
-                                        if diagonal.count("| O |") == sequencia_vencedora:
-                                            nome_vencedor = nome    #o nome vencedor ganha o valor do ultimo a jogar
-                                            lista_jogo.remove(nome_vencedor)    #remove o jogador que ganhou
-                                            nome_perdedor = lista_jogo[0]   #para que possamos pegar o valor do jogador que perdeu
-                                            adicionar_pontos(lista_rj, nome_vencedor)
-                                            adicionar_jogos(lista_rj, nome_vencedor)
-                                            adicionar_jogos(lista_rj, nome_perdedor) 
-                                            guardar_ficheiro_json("jogadores.json", lista_rj)
-                                            print("Sequência conseguida. Jogo terminado.")
-                                            lista_jogo.clear()
-                                            lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
-                                            lista_pecas_especiais_j2.clear()
-                                            lista_tabela.clear()                                                                                                                                                                                                                                                                                                                                                                                                                                
-                                            
-                                        else:
-                                            pass
+                                        for i in range(len(lista_tabela)):
+                                            for j in range(len(lista_tabela[i])):
+                                                if lista_tabela[i][j] == "| O |":
+                                                    for k in range(1,sequencia_vencedora):
+                                                        if i+k < len(lista_tabela) and j+k < len(lista_tabela[i]) and lista_tabela[i+k][j+k] == "| O |":
+                                                            diagonal +=1
+                                                            if diagonal == sequencia_vencedora-1:
+                                                                nome_perdedor = lista_jogo[0] 
+                                                                nome_vencedor = nome    #o nome vencedor ganha o valor do ultimo a jogar
+                                                                lista_jogo.remove(nome_vencedor)    #remove o jogador que ganhou
+                                                                nome_perdedor = lista_jogo[0]   #para que possamos pegar o valor do jogador que perdeu
+                                                                adicionar_pontos(lista_rj, nome_vencedor)
+                                                                adicionar_jogos(lista_rj, nome_vencedor)
+                                                                adicionar_jogos(lista_rj, nome_perdedor) 
+                                                                guardar_ficheiro_json("jogadores.json", lista_rj)
+                                                                print("Sequência conseguida. Jogo terminado.")
+                                                                lista_jogo.clear()
+                                                                lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
+                                                                lista_pecas_especiais_j2.clear()
+                                                                lista_tabela.clear()
+                                                                break #break k
+                                                        else:
+                                                            diagonal = 0
+                                                            break
+                                                    
+                                                    if diagonal == sequencia_vencedora: #break j
+                                                        break
+
+                                            if diagonal == sequencia_vencedora: #breaj i
+                                                break
+
+                                    if horizontal != sequencia_vencedora and vertical != sequencia_vencedora and diagonal != sequencia_vencedora:
+                                            for i in range(len(lista_tabela)-1, -1, -1):
+                                                for j in range(len(lista_tabela[i])-1, -1, -1):
+                                                    if lista_tabela[i][j] == "| O |":
+                                                        diagonal_invertida = 0
+                                                        for k in range(1, sequencia_vencedora):
+                                                            if i-k >= 0 and j+k < len(lista_tabela[i]) and lista_tabela[i-k][j+k] == "| O |":
+                                                                diagonal_invertida += 1
+                                                                if diagonal_invertida == sequencia_vencedora-1:
+                                                                    nome_perdedor = lista_jogo[0]
+                                                                    nome_vencedor = nome    #o nome vencedor ganha o valor do ultimo a jogar
+                                                                    lista_jogo.remove(nome_vencedor)    #remove o jogador que ganhou
+                                                                    nome_perdedor = lista_jogo[0]   #para que possamos pegar o valor do jogador que perdeu
+                                                                    adicionar_pontos(lista_rj, nome_vencedor)
+                                                                    adicionar_jogos(lista_rj, nome_vencedor)
+                                                                    adicionar_jogos(lista_rj, nome_perdedor) 
+                                                                    guardar_ficheiro_json("jogadores.json", lista_rj)
+                                                                    print("Sequência conseguida. Jogo terminado.")
+                                                                    lista_jogo.clear()
+                                                                    lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
+                                                                    lista_pecas_especiais_j2.clear()
+                                                                    lista_tabela.clear()
+                                                                    break #break k
+                                                            else:
+                                                                diagonal_invertida = 0
+                                                                break
+
+                                                        if diagonal_invertida == sequencia_vencedora: #break j
+                                                            break
+                                                        
+                                                if diagonal_invertida == sequencia_vencedora: #break i
+                                                    break
+
                                 else:
                                     print("Posição irregular.")
                                     nome = lista_jogo[0]    #mudar o valor do nome para o jogador adversário para que o jogador posso tentar denovo 
@@ -471,6 +570,7 @@ def main():
                                                         break
 
                                                 ########## VITORIA VERTICAL ##########
+                                                
                                                 if horizontal != sequencia_vencedora:
                                                     for j in range(len(lista_tabela[0])):   #itera todos os valores da lista em base das colunas
                                                         for i in range(len(lista_tabela)):
@@ -497,25 +597,72 @@ def main():
                                                         if vertical == sequencia_vencedora:    #serve para dar break da iteração das colunas
                                                             break
                                                 
-                                                ########## VITORIA DIAGONAL ##########
-                                                if horizontal != sequencia_vencedora and vertical != sequencia_vencedora: 
-                                                    diagonal = [lista_tabela[i][len(lista_tabela) - 1 - i] for i in range(len(lista_tabela))]     
-                                                    if diagonal.count("| X |") == sequencia_vencedora:
-                                                        nome_vencedor = nome    #o nome vencedor ganha o valor do ultimo a jogar
-                                                        lista_jogo.remove(nome_vencedor)    #remove o jogador que ganhou
-                                                        nome_perdedor = lista_jogo[0]   #para que possamos pegar o valor do jogador que perdeu
-                                                        adicionar_pontos(lista_rj, nome_vencedor)
-                                                        adicionar_jogos(lista_rj, nome_vencedor)
-                                                        adicionar_jogos(lista_rj, nome_perdedor) 
-                                                        guardar_ficheiro_json("jogadores.json", lista_rj)
-                                                        print("Sequência conseguida. Jogo terminado.")
-                                                        lista_jogo.clear()
-                                                        lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
-                                                        lista_pecas_especiais_j2.clear()
-                                                        lista_tabela.clear()
-                    
-                                                    else:
-                                                        pass 
+                                                ########## VITORIA DIAGONAL ##########                                                
+                                                
+                                                if horizontal != sequencia_vencedora and vertical != sequencia_vencedora:
+                                                    for i in range(len(lista_tabela)):
+                                                        for j in range(len(lista_tabela[i])):
+                                                            if lista_tabela[i][j] == "| X |":
+                                                                for k in range(1,sequencia_vencedora):
+                                                                    if i+k < len(lista_tabela) and j+k < len(lista_tabela[i]) and lista_tabela[i+k][j+k] == "| O |":
+                                                                        diagonal +=1
+                                                                        if diagonal == sequencia_vencedora-1:
+                                                                            nome_perdedor = lista_jogo[0] 
+                                                                            nome_vencedor = nome    #o nome vencedor ganha o valor do ultimo a jogar
+                                                                            lista_jogo.remove(nome_vencedor)    #remove o jogador que ganhou
+                                                                            nome_perdedor = lista_jogo[0]   #para que possamos pegar o valor do jogador que perdeu
+                                                                            adicionar_pontos(lista_rj, nome_vencedor)
+                                                                            adicionar_jogos(lista_rj, nome_vencedor)
+                                                                            adicionar_jogos(lista_rj, nome_perdedor) 
+                                                                            guardar_ficheiro_json("jogadores.json", lista_rj)
+                                                                            print("Sequência conseguida. Jogo terminado.")
+                                                                            lista_jogo.clear()
+                                                                            lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
+                                                                            lista_pecas_especiais_j2.clear()
+                                                                            lista_tabela.clear()
+                                                                            break #break k
+                                                                    else:
+                                                                        diagonal = 0
+                                                                        break
+                                                                
+                                                                if diagonal == sequencia_vencedora: #break j
+                                                                    break
+
+                                                        if diagonal == sequencia_vencedora: #breaj i
+                                                            break
+
+                                                    if horizontal != sequencia_vencedora and vertical != sequencia_vencedora and diagonal != sequencia_vencedora:
+                                                        for i in range(len(lista_tabela)-1, -1, -1):
+                                                            for j in range(len(lista_tabela[i])-1, -1, -1):
+                                                                if lista_tabela[i][j] == "| X |":
+                                                                    diagonal_invertida = 0
+                                                                    for k in range(1, sequencia_vencedora):
+                                                                        if i-k >= 0 and j+k < len(lista_tabela[i]) and lista_tabela[i-k][j+k] == "| X |":
+                                                                            diagonal_invertida += 1
+                                                                            if diagonal_invertida == sequencia_vencedora-1:
+                                                                                nome_perdedor = lista_jogo[0]
+                                                                                nome_vencedor = nome    #o nome vencedor ganha o valor do ultimo a jogar
+                                                                                lista_jogo.remove(nome_vencedor)    #remove o jogador que ganhou
+                                                                                nome_perdedor = lista_jogo[0]   #para que possamos pegar o valor do jogador que perdeu
+                                                                                adicionar_pontos(lista_rj, nome_vencedor)
+                                                                                adicionar_jogos(lista_rj, nome_vencedor)
+                                                                                adicionar_jogos(lista_rj, nome_perdedor) 
+                                                                                guardar_ficheiro_json("jogadores.json", lista_rj)
+                                                                                print("Sequência conseguida. Jogo terminado.")
+                                                                                lista_jogo.clear()
+                                                                                lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
+                                                                                lista_pecas_especiais_j2.clear()
+                                                                                lista_tabela.clear()
+                                                                                break #break k
+                                                                        else:
+                                                                            diagonal_invertida = 0
+                                                                            break
+
+                                                                    if diagonal_invertida == sequencia_vencedora: #break j
+                                                                        break
+                                                                    
+                                                            if diagonal_invertida == sequencia_vencedora: #break i
+                                                                break                                   
                                                 
                                                 if len(lista_tabela) != 0 and (tamanho_peca in lista_pecas_especiais_j1): 
                                                     lista_pecas_especiais_j1.remove(tamanho_peca)    #limpar a peça especial usada
@@ -571,7 +718,7 @@ def main():
                                                 
                                                 ########## VITORIA VERTICAL ##########
                                                 
-                                                if horizontal != sequencia_vencedora and vertical != sequencia_vencedora:
+                                                if horizontal != sequencia_vencedora:
                                                     for j in range(len(lista_tabela[0])):   #itera todos os valores da lista em base das colunas
                                                         for i in range(len(lista_tabela)):
                                                             if vertical != sequencia_vencedora:     #verifica se o variavel é igual a sequencia vencedora
@@ -598,24 +745,72 @@ def main():
                                                             break
                                                 
                                                 ########## VITORIA DIAGONAL ##########
+
                                                 if horizontal != sequencia_vencedora and vertical != sequencia_vencedora:
-                                                    diagonal = [lista_tabela[i][len(lista_tabela) - 1 - i] for i in range(len(lista_tabela))]     
-                                                    if diagonal.count("| X |") == sequencia_vencedora:
-                                                        nome_vencedor = nome    #o nome vencedor ganha o valor do ultimo a jogar
-                                                        lista_jogo.remove(nome_vencedor)    #remove o jogador que ganhou
-                                                        nome_perdedor = lista_jogo[0]   #para que possamos pegar o valor do jogador que perdeu
-                                                        adicionar_pontos(lista_rj, nome_vencedor)
-                                                        adicionar_jogos(lista_rj, nome_vencedor)
-                                                        adicionar_jogos(lista_rj, nome_perdedor) 
-                                                        guardar_ficheiro_json("jogadores.json", lista_rj)
-                                                        print("Sequência conseguida. Jogo terminado.")
-                                                        lista_jogo.clear()
-                                                        lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
-                                                        lista_pecas_especiais_j2.clear()
-                                                        lista_tabela.clear()
+                                                    for i in range(len(lista_tabela)):
+                                                        for j in range(len(lista_tabela[i])):
+                                                            if lista_tabela[i][j] == "| X |":
+                                                                for k in range(1,sequencia_vencedora):
+                                                                    if i+k < len(lista_tabela) and j+k < len(lista_tabela[i]) and lista_tabela[i+k][j+k] == "| O |":
+                                                                        diagonal +=1
+                                                                        if diagonal == sequencia_vencedora-1:
+                                                                            nome_perdedor = lista_jogo[0] 
+                                                                            nome_vencedor = nome    #o nome vencedor ganha o valor do ultimo a jogar
+                                                                            lista_jogo.remove(nome_vencedor)    #remove o jogador que ganhou
+                                                                            nome_perdedor = lista_jogo[0]   #para que possamos pegar o valor do jogador que perdeu
+                                                                            adicionar_pontos(lista_rj, nome_vencedor)
+                                                                            adicionar_jogos(lista_rj, nome_vencedor)
+                                                                            adicionar_jogos(lista_rj, nome_perdedor) 
+                                                                            guardar_ficheiro_json("jogadores.json", lista_rj)
+                                                                            print("Sequência conseguida. Jogo terminado.")
+                                                                            lista_jogo.clear()
+                                                                            lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
+                                                                            lista_pecas_especiais_j2.clear()
+                                                                            lista_tabela.clear()
+                                                                            break #break k
+                                                                    else:
+                                                                        diagonal = 0
+                                                                        break
+                                                                
+                                                                if diagonal == sequencia_vencedora: #break j
+                                                                    break
+
+                                                        if diagonal == sequencia_vencedora: #breaj i
+                                                            break
+
+                                                    if horizontal != sequencia_vencedora and vertical != sequencia_vencedora and diagonal != sequencia_vencedora:
+                                                        for i in range(len(lista_tabela)-1, -1, -1):
+                                                            for j in range(len(lista_tabela[i])-1, -1, -1):
+                                                                if lista_tabela[i][j] == "| X |":
+                                                                    diagonal_invertida = 0
+                                                                    for k in range(1, sequencia_vencedora):
+                                                                        if i-k >= 0 and j+k < len(lista_tabela[i]) and lista_tabela[i-k][j+k] == "| X |":
+                                                                            diagonal_invertida += 1
+                                                                            if diagonal_invertida == sequencia_vencedora-1:
+                                                                                nome_perdedor = lista_jogo[0]
+                                                                                nome_vencedor = nome    #o nome vencedor ganha o valor do ultimo a jogar
+                                                                                lista_jogo.remove(nome_vencedor)    #remove o jogador que ganhou
+                                                                                nome_perdedor = lista_jogo[0]   #para que possamos pegar o valor do jogador que perdeu
+                                                                                adicionar_pontos(lista_rj, nome_vencedor)
+                                                                                adicionar_jogos(lista_rj, nome_vencedor)
+                                                                                adicionar_jogos(lista_rj, nome_perdedor) 
+                                                                                guardar_ficheiro_json("jogadores.json", lista_rj)
+                                                                                print("Sequência conseguida. Jogo terminado.")
+                                                                                lista_jogo.clear()
+                                                                                lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
+                                                                                lista_pecas_especiais_j2.clear()
+                                                                                lista_tabela.clear()
+                                                                                break #break k
+                                                                        else:
+                                                                            diagonal_invertida = 0
+                                                                            break
+
+                                                                    if diagonal_invertida == sequencia_vencedora: #break j
+                                                                        break
+                                                                    
+                                                            if diagonal_invertida == sequencia_vencedora: #break i
+                                                                break                    
                                                     
-                                                    else:
-                                                        pass
                                                 
                                                 if len(lista_tabela) != 0 and (tamanho_peca in lista_pecas_especiais_j1): 
                                                     lista_pecas_especiais_j1.remove(tamanho_peca)    #limpar a peça especial usada
@@ -682,11 +877,11 @@ def main():
                                                 
                                                 ########## VITORIA VERTICAL ##########
                                                 
-                                                if horizontal != sequencia_vencedora and vertical != sequencia_vencedora:
+                                                if horizontal != sequencia_vencedora:
                                                     for j in range(len(lista_tabela[0])):
                                                         for i in range(len(lista_tabela)):     #itera todos os valores da lista em base das colunas
                                                             if vertical != sequencia_vencedora:     #verifica se o variavel é igual a sequencia vencedora
-                                                                if lista_tabela[i][j] == "| X |":
+                                                                if lista_tabela[i][j] == "| O |":
                                                                     vertical += 1 
                                                                     if vertical == sequencia_vencedora:    #segunda verificação
                                                                         nome_vencedor = nome    #o nome vencedor ganha o valor do ultimo a jogar
@@ -709,24 +904,72 @@ def main():
                                                             break
                                                 
                                                 ########## VITORIA DIAGONAL ##########
-                                                
+
                                                 if horizontal != sequencia_vencedora and vertical != sequencia_vencedora:
-                                                    diagonal = [lista_tabela[i][len(lista_tabela) - 1 - i] for i in range(len(lista_tabela))]     
-                                                    if diagonal.count("| O |") == sequencia_vencedora:
-                                                        nome_vencedor = nome    #o nome vencedor ganha o valor do ultimo a jogar
-                                                        lista_jogo.remove(nome_vencedor)    #remove o jogador que ganhou
-                                                        nome_perdedor = lista_jogo[0]   #para que possamos pegar o valor do jogador que perdeu
-                                                        adicionar_pontos(lista_rj, nome_vencedor)
-                                                        adicionar_jogos(lista_rj, nome_vencedor)
-                                                        adicionar_jogos(lista_rj, nome_perdedor) 
-                                                        guardar_ficheiro_json("jogadores.json", lista_rj)
-                                                        print("Sequência conseguida. Jogo terminado.")
-                                                        lista_jogo.clear()
-                                                        lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
-                                                        lista_pecas_especiais_j2.clear()
-                                                        lista_tabela.clear()
-                                                    else:
-                                                        pass
+                                                    for i in range(len(lista_tabela)):
+                                                        for j in range(len(lista_tabela[i])):
+                                                            if lista_tabela[i][j] == "| O |":
+                                                                for k in range(1,sequencia_vencedora):
+                                                                    if i+k < len(lista_tabela) and j+k < len(lista_tabela[i]) and lista_tabela[i+k][j+k] == "| O |":
+                                                                        diagonal +=1
+                                                                        if diagonal == sequencia_vencedora-1:
+                                                                            nome_perdedor = lista_jogo[0] 
+                                                                            nome_vencedor = nome    #o nome vencedor ganha o valor do ultimo a jogar
+                                                                            lista_jogo.remove(nome_vencedor)    #remove o jogador que ganhou
+                                                                            nome_perdedor = lista_jogo[0]   #para que possamos pegar o valor do jogador que perdeu
+                                                                            adicionar_pontos(lista_rj, nome_vencedor)
+                                                                            adicionar_jogos(lista_rj, nome_vencedor)
+                                                                            adicionar_jogos(lista_rj, nome_perdedor) 
+                                                                            guardar_ficheiro_json("jogadores.json", lista_rj)
+                                                                            print("Sequência conseguida. Jogo terminado.")
+                                                                            lista_jogo.clear()
+                                                                            lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
+                                                                            lista_pecas_especiais_j2.clear()
+                                                                            lista_tabela.clear()
+                                                                            break #break k
+                                                                    else:
+                                                                        diagonal = 0
+                                                                        break
+                                                                
+                                                                if diagonal == sequencia_vencedora: #break j
+                                                                    break
+
+                                                        if diagonal == sequencia_vencedora: #breaj i
+                                                            break
+
+                                                    if horizontal != sequencia_vencedora and vertical != sequencia_vencedora and diagonal != sequencia_vencedora:
+                                                        for i in range(len(lista_tabela)-1, -1, -1):
+                                                            for j in range(len(lista_tabela[i])-1, -1, -1):
+                                                                if lista_tabela[i][j] == "| O |":
+                                                                    diagonal_invertida = 0
+                                                                    for k in range(1, sequencia_vencedora):
+                                                                        if i-k >= 0 and j+k < len(lista_tabela[i]) and lista_tabela[i-k][j+k] == "| O |":
+                                                                            diagonal_invertida += 1
+                                                                            if diagonal_invertida == sequencia_vencedora-1:
+                                                                                nome_perdedor = lista_jogo[0]
+                                                                                nome_vencedor = nome    #o nome vencedor ganha o valor do ultimo a jogar
+                                                                                lista_jogo.remove(nome_vencedor)    #remove o jogador que ganhou
+                                                                                nome_perdedor = lista_jogo[0]   #para que possamos pegar o valor do jogador que perdeu
+                                                                                adicionar_pontos(lista_rj, nome_vencedor)
+                                                                                adicionar_jogos(lista_rj, nome_vencedor)
+                                                                                adicionar_jogos(lista_rj, nome_perdedor) 
+                                                                                guardar_ficheiro_json("jogadores.json", lista_rj)
+                                                                                print("Sequência conseguida. Jogo terminado.")
+                                                                                lista_jogo.clear()
+                                                                                lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
+                                                                                lista_pecas_especiais_j2.clear()
+                                                                                lista_tabela.clear()
+                                                                                break #break k
+                                                                        else:
+                                                                            diagonal_invertida = 0
+                                                                            break
+
+                                                                    if diagonal_invertida == sequencia_vencedora: #break j
+                                                                        break
+                                                                    
+                                                            if diagonal_invertida == sequencia_vencedora: #break i
+                                                                break
+                                             
                                 
                                                 if len(lista_tabela) != 0 and (tamanho_peca in lista_pecas_especiais_j2): 
                                                     lista_pecas_especiais_j2.remove(tamanho_peca)    #limpar a peça especial usada
@@ -782,11 +1025,11 @@ def main():
                                                 
                                                 ########## VITORIA VERTICAL ##########
                                                 
-                                                if horizontal != sequencia_vencedora and vertical != sequencia_vencedora:
+                                                if horizontal != sequencia_vencedora:
                                                     for j in range(len(lista_tabela[0])):   #itera todos os valores da lista em base das colunas
                                                         for i in range(len(lista_tabela)):
                                                             if vertical != sequencia_vencedora:     #verifica se o variavel é igual a sequencia vencedora
-                                                                if lista_tabela[i][j] == "| X |":
+                                                                if lista_tabela[i][j] == "| O |":
                                                                     vertical += 1 
                                                                     if vertical == sequencia_vencedora:     #segunda verificação
                                                                         nome_vencedor = nome    #o nome vencedor ganha o valor do ultimo a jogar
@@ -811,23 +1054,71 @@ def main():
                                                 ########## VITORIA DIAGONAL ##########
                                                 
                                                 if horizontal != sequencia_vencedora and vertical != sequencia_vencedora:
-                                                    diagonal = [lista_tabela[i][len(lista_tabela) - 1 - i] for i in range(len(lista_tabela))]     
-                                                    if diagonal.count("| O |") == sequencia_vencedora:
-                                                        nome_vencedor = nome    #o nome vencedor ganha o valor do ultimo a jogar
-                                                        lista_jogo.remove(nome_vencedor)    #remove o jogador que ganhou
-                                                        nome_perdedor = lista_jogo[0]   #para que possamos pegar o valor do jogador que perdeu
-                                                        adicionar_pontos(lista_rj, nome_vencedor)
-                                                        adicionar_jogos(lista_rj, nome_vencedor)
-                                                        adicionar_jogos(lista_rj, nome_perdedor)
-                                                        guardar_ficheiro_json("jogadores.json", lista_rj)
-                                                        print("Sequência conseguida. Jogo terminado.")
-                                                        lista_jogo.clear()
-                                                        lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
-                                                        lista_pecas_especiais_j2.clear()
-                                                        lista_tabela.clear()
-                                                    else:
-                                                        pass
+                                                    for i in range(len(lista_tabela)):
+                                                        for j in range(len(lista_tabela[i])):
+                                                            if lista_tabela[i][j] == "| X |":
+                                                                for k in range(1,sequencia_vencedora):
+                                                                    if i+k < len(lista_tabela) and j+k < len(lista_tabela[i]) and lista_tabela[i+k][j+k] == "| O |":
+                                                                        diagonal +=1
+                                                                        if diagonal == sequencia_vencedora-1:
+                                                                            nome_perdedor = lista_jogo[0] 
+                                                                            nome_vencedor = nome    #o nome vencedor ganha o valor do ultimo a jogar
+                                                                            lista_jogo.remove(nome_vencedor)    #remove o jogador que ganhou
+                                                                            nome_perdedor = lista_jogo[0]   #para que possamos pegar o valor do jogador que perdeu
+                                                                            adicionar_pontos(lista_rj, nome_vencedor)
+                                                                            adicionar_jogos(lista_rj, nome_vencedor)
+                                                                            adicionar_jogos(lista_rj, nome_perdedor) 
+                                                                            guardar_ficheiro_json("jogadores.json", lista_rj)
+                                                                            print("Sequência conseguida. Jogo terminado.")
+                                                                            lista_jogo.clear()
+                                                                            lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
+                                                                            lista_pecas_especiais_j2.clear()
+                                                                            lista_tabela.clear()
+                                                                            break #break k
+                                                                    else:
+                                                                        diagonal = 0
+                                                                        break
+                                                                
+                                                                if diagonal == sequencia_vencedora: #break j
+                                                                    break
 
+                                                        if diagonal == sequencia_vencedora: #breaj i
+                                                            break
+
+                                                    if horizontal != sequencia_vencedora and vertical != sequencia_vencedora and diagonal != sequencia_vencedora:
+                                                        for i in range(len(lista_tabela)-1, -1, -1):
+                                                            for j in range(len(lista_tabela[i])-1, -1, -1):
+                                                                if lista_tabela[i][j] == "| O |":
+                                                                    diagonal_invertida = 0
+                                                                    for k in range(1, sequencia_vencedora):
+                                                                        if i-k >= 0 and j+k < len(lista_tabela[i]) and lista_tabela[i-k][j+k] == "| O |":
+                                                                            diagonal_invertida += 1
+                                                                            if diagonal_invertida == sequencia_vencedora-1:
+                                                                                nome_perdedor = lista_jogo[0]
+                                                                                nome_vencedor = nome    #o nome vencedor ganha o valor do ultimo a jogar
+                                                                                lista_jogo.remove(nome_vencedor)    #remove o jogador que ganhou
+                                                                                nome_perdedor = lista_jogo[0]   #para que possamos pegar o valor do jogador que perdeu
+                                                                                adicionar_pontos(lista_rj, nome_vencedor)
+                                                                                adicionar_jogos(lista_rj, nome_vencedor)
+                                                                                adicionar_jogos(lista_rj, nome_perdedor) 
+                                                                                guardar_ficheiro_json("jogadores.json", lista_rj)
+                                                                                print("Sequência conseguida. Jogo terminado.")
+                                                                                lista_jogo.clear()
+                                                                                lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
+                                                                                lista_pecas_especiais_j2.clear()
+                                                                                lista_tabela.clear()
+                                                                                break #break k
+                                                                        else:
+                                                                            diagonal_invertida = 0
+                                                                            break
+
+                                                                    if diagonal_invertida == sequencia_vencedora: #break j
+                                                                        break
+                                                                    
+                                                            if diagonal_invertida == sequencia_vencedora: #break i
+                                                                break
+                                           
+                                                   
                                                 if len(lista_tabela) != 0 and (tamanho_peca in lista_pecas_especiais_j2): 
                                                     lista_pecas_especiais_j2.remove(tamanho_peca)    #limpar a peça especial usada
                                                 else:
