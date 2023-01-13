@@ -1,6 +1,6 @@
 import json
 
-def escrever_ficheiro_json(nome_ficheiro, d):
+def guardar_ficheiro_json(nome_ficheiro, d):
   json_string = json.dumps(d)
   json_file = open(nome_ficheiro, "w")
   json_file.write(json_string)

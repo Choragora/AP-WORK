@@ -5,7 +5,7 @@ def main():
     
     ########### VARIAVEIS TEMPORARIAS ############
     
-    lista_rj = ler_ficheiro_json("jogadores_json")
+    lista_rj = ler_ficheiro_json("jogadores.json")
     lista_tabela = []
     lista_jogo = []
     lista_pecas_especiais_j1 = []
@@ -88,11 +88,6 @@ def main():
                         lista_pecas_especiais_j2.clear()    #limpa todas as listas eliminando o jogo em curso
                         lista_jogo.clear()
                         lista_tabela.clear()                                   
-                    
-                    print(lista_jogo)
-                    print(lista_tabela)                     
-                    print(lista_pecas_especiais_j1)     #limpa todas as listas eliminando o jogo em curso
-                    print(lista_pecas_especiais_j2)
 
                 else: 
                     print("Já existe um jogo em curso")
@@ -108,9 +103,8 @@ def main():
             if verificar_nomes(lista_rj, opcao[1]) == True:    
                 registar_jogador(opcao[1], lista_rj)
                 bubble_sort(lista_rj) 
-                escrever_ficheiro_json("jogadores_json", lista_rj)
+                guardar_ficheiro_json("jogadores.json", lista_rj)
                 print("Jogador registado com sucesso.")
-                print(lista_rj) #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
             else:
                 print("Jogador existente.")
 
@@ -123,9 +117,8 @@ def main():
                 if opcao[1] not in lista_jogo:    #verifica se o nome esta num jogo em curso
                     if verificar_nomes(lista_rj, opcao[1]) == False:    #verifica se o nome esta registado                                                                
                         remover_jogador(opcao[1], lista_rj)
-                        escrever_ficheiro_json("jogadores_json", lista_rj)                                                          
+                        guardar_ficheiro_json("jogadores.json", lista_rj)                                                          
                         print("Jogador removido com sucesso.")
-                        print(lista_rj) #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
                     else:
                         print("Jogador não existente.")
                 else:
@@ -142,7 +135,7 @@ def main():
                 for listagem in lista_rj:
                     print(listagem)
             else:
-                print()
+                print("Não existem jogadores registados.")
 
 
         ########### DETALHES JOGO ############
@@ -186,7 +179,7 @@ def main():
                         if opcao[1] in lista_jogo and opcao[2] in lista_jogo:
                             adicionar_jogos(lista_rj, opcao[1])
                             adicionar_jogos(lista_rj, opcao[2]) 
-                            escrever_ficheiro_json("jogadores_json", lista_rj)
+                            guardar_ficheiro_json("jogadores.json", lista_rj)
                             lista_jogo.clear()
                             lista_pecas_especiais_j1.clear()    #limpar o jogo em curso
                             lista_pecas_especiais_j2.clear()
@@ -207,7 +200,7 @@ def main():
                             adicionar_pontos(lista_rj, nome_vencedor_desistencia)
                             adicionar_jogos(lista_rj, nome_desistente)
                             adicionar_jogos(lista_rj, nome_vencedor_desistencia) 
-                            escrever_ficheiro_json("jogadores_json", lista_rj)
+                            guardar_ficheiro_json("jogadores.json", lista_rj)
                             print('Desistência com sucesso. Jogo terminado.')
                             lista_jogo.clear()
                             lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
@@ -266,7 +259,7 @@ def main():
                                                         adicionar_pontos(lista_rj, nome_vencedor)
                                                         adicionar_jogos(lista_rj, nome_vencedor)
                                                         adicionar_jogos(lista_rj, nome_perdedor) 
-                                                        escrever_ficheiro_json("jogadores_json", lista_rj)
+                                                        guardar_ficheiro_json("jogadores.json", lista_rj)
                                                         print("Sequência conseguida. Jogo terminado.")
                                                         lista_jogo.clear()
                                                         lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
@@ -294,7 +287,7 @@ def main():
                                                             adicionar_pontos(lista_rj, nome_vencedor)
                                                             adicionar_jogos(lista_rj, nome_vencedor)
                                                             adicionar_jogos(lista_rj, nome_perdedor) 
-                                                            escrever_ficheiro_json("jogadores_json", lista_rj)
+                                                            guardar_ficheiro_json("jogadores.json", lista_rj)
                                                             print("Sequência conseguida. Jogo terminado.")
                                                             lista_jogo.clear()
                                                             lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
@@ -317,7 +310,7 @@ def main():
                                             adicionar_pontos(lista_rj, nome_vencedor)
                                             adicionar_jogos(lista_rj, nome_vencedor)
                                             adicionar_jogos(lista_rj, nome_perdedor) 
-                                            escrever_ficheiro_json("jogadores_json", lista_rj)
+                                            guardar_ficheiro_json("jogadores.json", lista_rj)
                                             print("Sequência conseguida. Jogo terminado.")
                                             lista_jogo.clear()
                                             lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
@@ -358,7 +351,7 @@ def main():
                                                         adicionar_pontos(lista_rj, nome_vencedor)
                                                         adicionar_jogos(lista_rj, nome_vencedor)
                                                         adicionar_jogos(lista_rj, nome_perdedor) 
-                                                        escrever_ficheiro_json("jogadores_json", lista_rj)
+                                                        guardar_ficheiro_json("jogadores.json", lista_rj)
                                                         print("Sequência conseguida. Jogo terminado.")
                                                         lista_jogo.clear()
                                                         lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
@@ -386,7 +379,7 @@ def main():
                                                             adicionar_pontos(lista_rj, nome_vencedor)
                                                             adicionar_jogos(lista_rj, nome_vencedor)
                                                             adicionar_jogos(lista_rj, nome_perdedor) 
-                                                            escrever_ficheiro_json("jogadores_json", lista_rj)
+                                                            guardar_ficheiro_json("jogadores.json", lista_rj)
                                                             print("Sequência conseguida. Jogo terminado.")
                                                             lista_jogo.clear()
                                                             lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
@@ -410,7 +403,7 @@ def main():
                                             adicionar_pontos(lista_rj, nome_vencedor)
                                             adicionar_jogos(lista_rj, nome_vencedor)
                                             adicionar_jogos(lista_rj, nome_perdedor) 
-                                            escrever_ficheiro_json("jogadores_json", lista_rj)
+                                            guardar_ficheiro_json("jogadores.json", lista_rj)
                                             print("Sequência conseguida. Jogo terminado.")
                                             lista_jogo.clear()
                                             lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
@@ -464,7 +457,7 @@ def main():
                                                                     adicionar_pontos(lista_rj, nome_vencedor)
                                                                     adicionar_jogos(lista_rj, nome_vencedor)
                                                                     adicionar_jogos(lista_rj, nome_perdedor) 
-                                                                    escrever_ficheiro_json("jogadores_json", lista_rj)
+                                                                    guardar_ficheiro_json("jogadores.json", lista_rj)
                                                                     print("Sequência conseguida. Jogo terminado.")
                                                                     lista_jogo.clear()
                                                                     lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
@@ -491,7 +484,7 @@ def main():
                                                                         adicionar_pontos(lista_rj, nome_vencedor)
                                                                         adicionar_jogos(lista_rj, nome_vencedor)
                                                                         adicionar_jogos(lista_rj, nome_perdedor) 
-                                                                        escrever_ficheiro_json("jogadores_json", lista_rj)
+                                                                        guardar_ficheiro_json("jogadores.json", lista_rj)
                                                                         print("Sequência conseguida. Jogo terminado.")
                                                                         lista_jogo.clear()
                                                                         lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
@@ -514,7 +507,7 @@ def main():
                                                         adicionar_pontos(lista_rj, nome_vencedor)
                                                         adicionar_jogos(lista_rj, nome_vencedor)
                                                         adicionar_jogos(lista_rj, nome_perdedor) 
-                                                        escrever_ficheiro_json("jogadores_json", lista_rj)
+                                                        guardar_ficheiro_json("jogadores.json", lista_rj)
                                                         print("Sequência conseguida. Jogo terminado.")
                                                         lista_jogo.clear()
                                                         lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
@@ -563,7 +556,7 @@ def main():
                                                                     adicionar_pontos(lista_rj, nome_vencedor)
                                                                     adicionar_jogos(lista_rj, nome_vencedor)
                                                                     adicionar_jogos(lista_rj, nome_perdedor) 
-                                                                    escrever_ficheiro_json("jogadores_json", lista_rj)
+                                                                    guardar_ficheiro_json("jogadores.json", lista_rj)
                                                                     print("Sequência conseguida. Jogo terminado.")
                                                                     lista_jogo.clear()
                                                                     lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
@@ -591,7 +584,7 @@ def main():
                                                                         adicionar_pontos(lista_rj, nome_vencedor)
                                                                         adicionar_jogos(lista_rj, nome_vencedor)
                                                                         adicionar_jogos(lista_rj, nome_perdedor) 
-                                                                        escrever_ficheiro_json("jogadores_json", lista_rj)  
+                                                                        guardar_ficheiro_json("jogadores.json", lista_rj)  
                                                                         print("Sequência conseguida. Jogo terminado.")  
                                                                         lista_jogo.clear()
                                                                         lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
@@ -614,7 +607,7 @@ def main():
                                                         adicionar_pontos(lista_rj, nome_vencedor)
                                                         adicionar_jogos(lista_rj, nome_vencedor)
                                                         adicionar_jogos(lista_rj, nome_perdedor) 
-                                                        escrever_ficheiro_json("jogadores_json", lista_rj)
+                                                        guardar_ficheiro_json("jogadores.json", lista_rj)
                                                         print("Sequência conseguida. Jogo terminado.")
                                                         lista_jogo.clear()
                                                         lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
@@ -674,7 +667,7 @@ def main():
                                                                     adicionar_pontos(lista_rj, nome_vencedor)
                                                                     adicionar_jogos(lista_rj, nome_vencedor)
                                                                     adicionar_jogos(lista_rj, nome_perdedor) 
-                                                                    escrever_ficheiro_json("jogadores_json", lista_rj)
+                                                                    guardar_ficheiro_json("jogadores.json", lista_rj)
                                                                     print("Sequência conseguida. Jogo terminado.")
                                                                     lista_jogo.clear()
                                                                     lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
@@ -702,7 +695,7 @@ def main():
                                                                         adicionar_pontos(lista_rj, nome_vencedor)
                                                                         adicionar_jogos(lista_rj, nome_vencedor)
                                                                         adicionar_jogos(lista_rj, nome_perdedor) 
-                                                                        escrever_ficheiro_json("jogadores_json", lista_rj)
+                                                                        guardar_ficheiro_json("jogadores.json", lista_rj)
                                                                         print("Sequência conseguida. Jogo terminado.")
                                                                         lista_jogo.clear()
                                                                         lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
@@ -726,7 +719,7 @@ def main():
                                                         adicionar_pontos(lista_rj, nome_vencedor)
                                                         adicionar_jogos(lista_rj, nome_vencedor)
                                                         adicionar_jogos(lista_rj, nome_perdedor) 
-                                                        escrever_ficheiro_json("jogadores_json", lista_rj)
+                                                        guardar_ficheiro_json("jogadores.json", lista_rj)
                                                         print("Sequência conseguida. Jogo terminado.")
                                                         lista_jogo.clear()
                                                         lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
@@ -773,7 +766,7 @@ def main():
                                                                     adicionar_pontos(lista_rj, nome_vencedor)
                                                                     adicionar_jogos(lista_rj, nome_vencedor)
                                                                     adicionar_jogos(lista_rj, nome_perdedor) 
-                                                                    escrever_ficheiro_json("jogadores_json", lista_rj)
+                                                                    guardar_ficheiro_json("jogadores.json", lista_rj)
                                                                     print("Sequência conseguida. Jogo terminado.")
                                                                     lista_jogo.clear()
                                                                     lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
@@ -802,7 +795,7 @@ def main():
                                                                         adicionar_pontos(lista_rj, nome_vencedor)
                                                                         adicionar_jogos(lista_rj, nome_vencedor)
                                                                         adicionar_jogos(lista_rj, nome_perdedor) 
-                                                                        escrever_ficheiro_json("jogadores_json", lista_rj)
+                                                                        guardar_ficheiro_json("jogadores.json", lista_rj)
                                                                         print("Sequência conseguida. Jogo terminado.")
                                                                         lista_jogo.clear()
                                                                         lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
@@ -826,7 +819,7 @@ def main():
                                                         adicionar_pontos(lista_rj, nome_vencedor)
                                                         adicionar_jogos(lista_rj, nome_vencedor)
                                                         adicionar_jogos(lista_rj, nome_perdedor)
-                                                        escrever_ficheiro_json("jogadores_json", lista_rj)
+                                                        guardar_ficheiro_json("jogadores.json", lista_rj)
                                                         print("Sequência conseguida. Jogo terminado.")
                                                         lista_jogo.clear()
                                                         lista_pecas_especiais_j1.clear()    #Limpar o jogo em curso
@@ -874,18 +867,29 @@ def main():
 
             ########### GRAVAR #############
     
-        elif opcao[0] == "g":                                                                                           
-            pass
+        elif opcao[0] == "g":
+            if opcao[1] == "jogo_guardado":                                                                                           
+                jogo_atual = [lista_tabela, lista_jogo, lista_pecas_especiais_j1, lista_pecas_especiais_j2, lista_rj]   #grava o jogo
+                guardar_ficheiro_json("jogo_guardado.json", jogo_atual)
+                print("Jogo gravado.")
+            else:
+                print("Ocorreu um erro na gravação.")
         
 
 
             ########## LER #############
 
-        elif opcao[0] == "l":                                                                                           
-            pass
+        elif opcao[0] == "l": 
+            if opcao[1] == "jogo_guardado":     #le o jogo                                                                                         
+                ler_ficheiro_json("jogo_guardado.json")
+                lista_tabela = jogo_atual[0]
+                lista_jogo = jogo_atual[1]
+                lista_pecas_especiais_j1 = jogo_atual[2]
+                lista_pecas_especiais_j2 = jogo_atual[3]
+                print("Jogo carregado.")
+            else:
+                print("Ocorreu um erro no carregamento.")
             
-
-
             ########### SAIR DO MENU ############
  
         elif opcao[0] == "sm":                                                                                           
