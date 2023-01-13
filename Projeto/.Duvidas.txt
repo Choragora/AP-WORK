@@ -1,7 +1,0 @@
-Duvidas:
-    - Funcionamento de ficheiros, se iremos abordar futuramente
-    - Como funciona a 2ª saida com insucesso: Quando o jogador indicado participa no jogo em curso
-    - Podemos explicar as regras do jogo ao utilizador antes de ser pedido os valores do tamanho da grelha
-    - Se o resultado pode aparecer apos cada jogada ao em vez do utilizador pedir
-    - Podemos fazer prints dentro de funções
-    - na tabela se tiver um numero maior que 9, a tabela fica desformatada

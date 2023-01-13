@@ -69,23 +69,7 @@ def nome_jogadores_ij (jogador_1, jogador_2, lista_jogo):                       
 def pecas_especiais(peca, lista_pecas_especiais_j1, lista_pecas_especiais_j2):
   lista_pecas_especiais_j1.append(peca)
   lista_pecas_especiais_j2.append(peca)
-  return lista_pecas_especiais_j1, lista_pecas_especiais_j2   
+  return lista_pecas_especiais_j1, lista_pecas_especiais_j2
 
-def colocar_peca_j1(colunas, lista_tabela):
-  ultimo_elemento_vazio = 1
-  for i in range(len(lista_tabela)):
-    if lista_tabela[i][colunas] == "|___|":
-        ultimo_elemento_vazio = i
-    else:
-        break
-  lista_tabela[ultimo_elemento_vazio][colunas] = "| X |"
-
-def colocar_peca_j2(colunas, lista_tabela):
-  ultimo_elemento_vazio = 1
-  for i in range(len(lista_tabela)):
-      if lista_tabela[i][colunas] == "|___|":
-          ultimo_elemento_vazio = i
-      else:
-          break
-  lista_tabela[ultimo_elemento_vazio][colunas] = "| O |"     
+   
                                  

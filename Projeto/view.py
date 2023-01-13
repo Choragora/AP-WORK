@@ -1188,5 +1188,3 @@ def main():
         
         else:
             print("Opção inválida.")
-
-main()
