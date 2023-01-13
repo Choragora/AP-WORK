@@ -11,24 +11,46 @@ def ler_ficheiro_json(nome_ficheiro):
     data = json.load(f)
     return data
 
+def verificar_nomes(lista_rj, nome):
+  nomes_rj = [valor['Nome'] for valor in lista_rj]
+  if nome not in nomes_rj:
+    return True
+  else:
+    return False
+  
+def bubble_sort(lista_rj):
+  for i in range(len(lista_rj)):
+    for j in range(0, len(lista_rj)-i-1):
+      if lista_rj[j]["Nome"] > lista_rj[j+1]["Nome"]:
+        temp = lista_rj[j+1]
+        lista_rj[j+1] = lista_rj[j]
+        lista_rj[j] = temp
+
+def adicionar_pontos(lista_rj, nome):
+  for valor in lista_rj:
+    if valor["Nome"] == nome:
+        valor['Pontos'] += 1
+
+def adicionar_jogos(lista_rj, nome):
+  for valor in lista_rj:
+    if valor["Nome"] == nome:
+        valor['Jogos'] += 1
+
 def registar_jogador(nome_registar, lista_rj):                                       #função de adicionar jogadores dento da lista de jogadores
   nome_registar = {"Nome": nome_registar, "Pontos": 0, "Jogos": 0}
   lista_rj.append(nome_registar)
   return lista_rj
 
-def verificar_nomes(lista_rj, nome):
-  contagem = 0
+def remover_jogador(nome_remover, lista_rj):                                         #função de remover jogadores da lista de jogadores
+  pontos = 0
+  jogos = 0
   for valor in lista_rj:
-    if valor["Nome"] == nome:
-      contagem += 1
-      if contagem ==
-    else:
-      return False
-   
-
-def remover_jogador(nome_remover, lista_jogadores):                                         #função de remover jogadores da lista de jogadores
-  lista_jogadores.remove(nome_remover)
-  return lista_jogadores
+    if valor["Nome"] == nome_remover:
+      pontos = valor['Pontos']
+      jogos = valor['Jogos']
+  nome_remover = {"Nome": nome_remover, "Pontos": pontos, "Jogos": jogos}
+  lista_rj.remove(nome_remover)
+  return lista_rj
 
 def listar_jogadores(lista_jogadores, lista_partidas, lista_vitorias, lista_lj):            #função que faz a iteração de cada uma das três listas, passando em cada posição igual entre ambas as listas,
   for i in range(len(lista_jogadores)):                                                     #depois o valor de i de ambas as listas na posição n (primeiro loop n=0, loops seguintes n+1) são armazenadas em  
