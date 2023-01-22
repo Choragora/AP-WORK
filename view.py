@@ -257,8 +257,8 @@ def main():
                                         for j in range(len(lista_tabela[i])):       #Itera todos os valores da lista em base de linhas
                                             if horizontal != sequencia_vencedora:   #Verifica se a variavel é diferente da sequencia vencedora
                                                 if lista_tabela[i][j] == "| X |":
-                                                    horizontal += 1 
-                                                    if horizontal == sequencia_vencedora:   #Segunda verificação
+                                                    horizontal += 1                         #Controlar o número de elementos = X que se encontram de seguida
+                                                    if horizontal == sequencia_vencedora:   #Segunda verificação 
                                                         nome_vencedor = nome                #O nome vencedor ganha o valor do ultimo a jogar
                                                         lista_jogo.remove(nome_vencedor)    #Remove o jogador que ganhou
                                                         nome_perdedor = lista_jogo[0]       #Para que possamos pegar o valor do jogador que perdeu
@@ -285,7 +285,7 @@ def main():
                                             for i in range(len(lista_tabela)):          #Itera todos os valores da lista em base de colunas
                                                 if vertical != sequencia_vencedora:     #Verifica se o variavel é igual a sequencia vencedora
                                                     if lista_tabela[i][j] == "| X |":
-                                                        vertical += 1 
+                                                        vertical += 1                           #Controlar o número de elementos = X que se encontram de seguida
                                                         if horizontal == sequencia_vencedora:   #Segunda verificação
                                                             nome_vencedor = nome                #O nome vencedor ganha o valor do ultimo a jogar
                                                             lista_jogo.remove(nome_vencedor)    #Remove o jogador que ganhou
@@ -309,11 +309,11 @@ def main():
 
                                     if horizontal != sequencia_vencedora and vertical != sequencia_vencedora:
                                         for i in range(len(lista_tabela)):
-                                            for j in range(len(lista_tabela[i])):
-                                                if lista_tabela[i][j] == "| X |":
+                                            for j in range(len(lista_tabela[i])):   #verifica todos os elementos da tabela
+                                                if lista_tabela[i][j] == "| X |":   #caso encontre um X na verificação vai passar à verificação de qunatos se encontram de seguida
                                                     for k in range(1,sequencia_vencedora):
                                                         if i+k < len(lista_tabela) and j+k < len(lista_tabela[i]) and lista_tabela[i+k][j+k] == "| X |":
-                                                            diagonal +=1
+                                                            diagonal +=1                ##Controlar o número de elementos = X que se encontram de seguida
                                                             if diagonal == sequencia_vencedora-1:
                                                                 nome_perdedor = lista_jogo[0] 
                                                                 nome_vencedor = nome    #o nome vencedor ganha o valor do ultimo a jogar
@@ -330,7 +330,7 @@ def main():
                                                                 lista_tabela.clear()
                                                                 break #break k
                                                         else:
-                                                            diagonal = 0
+                                                            diagonal = 0 
                                                             break
                                                     
                                                     if diagonal == sequencia_vencedora: #break j
@@ -341,12 +341,12 @@ def main():
 
                                         if horizontal != sequencia_vencedora and vertical != sequencia_vencedora and diagonal != sequencia_vencedora:
                                             for i in range(len(lista_tabela)-1, -1, -1):
-                                                for j in range(len(lista_tabela[i])-1, -1, -1):
-                                                    if lista_tabela[i][j] == "| X |":
+                                                for j in range(len(lista_tabela[i])-1, -1, -1):      #verifica todos os elementos da tabela
+                                                    if lista_tabela[i][j] == "| X |":                #caso encontre um X na verificação vai passar à verificação de qunatos se encontram de seguida
                                                         diagonal_invertida = 0
                                                         for k in range(1, sequencia_vencedora):
                                                             if i-k >= 0 and j+k < len(lista_tabela[i]) and lista_tabela[i-k][j+k] == "| X |":
-                                                                diagonal_invertida += 1
+                                                                diagonal_invertida += 1    #Controlar o número de elementos = X que se encontram de seguida
                                                                 if diagonal_invertida == sequencia_vencedora-1:
                                                                     nome_perdedor = lista_jogo[0]
                                                                     nome_vencedor = nome    #o nome vencedor ganha o valor do ultimo a jogar
