@@ -30,7 +30,7 @@ def main():
         
         ########### INICIAR JOGO ############
 
-        if opcao[0] == "ij":   #se for iniciar jogo
+        if opcao[0] == "ij": 
             horizontal = 0
             vertical = 0
             diagonal = 0
@@ -39,35 +39,35 @@ def main():
             altura = int(opcao[4]) 
             sequencia_vencedora = int(opcao[5])
                                                                                        
-            if len(lista_rj) > 1:     #verifica se a lista tem pelo menos dois jogadores registados
-                if len(lista_tabela) == 0:    #verifica se existe jogo em curso                                                                                                                                        
-                    lista_jogo = []     #lista onde serao armazenados os jogadores   
+            if len(lista_rj) > 1:                   #Verifica se a lista tem pelo menos dois jogadores registados
+                if len(lista_tabela) == 0:          #Verifica se existe um jogo em curso                                                                                                                                       
+                    lista_jogo = []                 #Lista onde serão armazenados os jogadores   
 
                     ########## NOMES ##########
 
                     if verificar_nomes(lista_rj, opcao[1]) == False and verificar_nomes(lista_rj, opcao[2]) == False:
-                        lista_jogo.append(opcao[1])
-                        lista_jogo.append(opcao[2])
+                        lista_jogo.append(opcao[1])  #Se o jogador 1 e 2 estiverem na lista de jogadores, os mesmo 
+                        lista_jogo.append(opcao[2])  #são adicionados à lista do jogo
 
                         ########## DIMENSOES ##########
 
-                        if (comprimento/2 <= altura <= comprimento):    #verifica as condições da dimensao da grelha
+                        if (comprimento/2 <= altura <= comprimento):        #Verifica as condições da dimensao da grelha
                             for i in range (altura):
-                                lista_tabela.append(["|___|"] *comprimento)     #cria os slots da grelha
+                                lista_tabela.append(["|___|"] *comprimento) #Cria os slots da grelha
                                 
                             ########## SEQUENCIA VENCEDORA ##########
 
-                            if sequencia_vencedora != 1 and sequencia_vencedora != 2 and sequencia_vencedora < comprimento:     #verifica as condições da sequencia vencedora
+                            if sequencia_vencedora != 1 and sequencia_vencedora != 2 and sequencia_vencedora < comprimento: #Verifica as condições da sequencia vencedora
                                 
                                ########## PEÇAS ESPECIAIS ##########
                                
-                                for peca in [int(i) for i in opcao[6:]]:    #serve para iterar a partir do 6 elemento da opcao     
-                                    if peca < sequencia_vencedora and peca != 1:      #verifica se a peça é inferior a sequencia vencedora e é diferente de 1
-                                        pecas_especiais(peca, lista_pecas_especiais_j1, lista_pecas_especiais_j2)        
+                                for peca in [int(i) for i in opcao[6:]]:    #Conta o numero de peças especiais introduzidas pelo utilizador 
+                                    if peca < sequencia_vencedora and peca != 1:      #Verifica se a peça é inferior a sequencia vencedora e é diferente de 1
+                                        pecas_especiais(peca, lista_pecas_especiais_j1, lista_pecas_especiais_j2)   #Peça especial adiciona à lista de peças especiais de cada jogador        
                                     else:
                                         print("Dimensões de peças especiais invalidas.")
                                         lista_pecas_especiais_j1.clear()
-                                        lista_pecas_especiais_j2.clear()    #limpa todas as listas eliminando o jogo em curso
+                                        lista_pecas_especiais_j2.clear()    
                                         lista_jogo.clear()
                                         lista_tabela.clear()
                                         break
@@ -105,7 +105,7 @@ def main():
 
         ########### REGISTAR JOGADOR ############
 
-        elif opcao[0] == "rj":    #registar jogador
+        elif opcao[0] == "rj":    
             if verificar_nomes(lista_rj, opcao[1]) == True:    
                 registar_jogador(opcao[1], lista_rj)
                 bubble_sort(lista_rj) 
@@ -119,9 +119,9 @@ def main():
         ########### ELIMINAR JOGADOR ############
         
         elif opcao[0] == "ej":                                                                                   
-            if len(lista_rj) != 0:    #verificação de número de jogadores
-                if opcao[1] not in lista_jogo:    #verifica se o nome esta num jogo em curso
-                    if verificar_nomes(lista_rj, opcao[1]) == False:    #verifica se o nome esta registado                                                                
+            if len(lista_rj) != 0:                  #Verificação de número de jogadores
+                if opcao[1] not in lista_jogo:      #Verifica se o nome está num jogo em curso
+                    if verificar_nomes(lista_rj, opcao[1]) == False:       #verifica se o nome está registado                                                                
                         remover_jogador(opcao[1], lista_rj)
                         guardar_ficheiro_json("jogadores.json", lista_rj)                                                          
                         print("Jogador removido com sucesso.")
@@ -137,7 +137,7 @@ def main():
         ########### LISTAR JOGADOR ############
 
         elif opcao[0] == "lj":                                                                                                       
-            if len(lista_rj) != 0:
+            if len(lista_rj) != 0:  #Verifica se existem jogadores registados
                 for listagem in lista_rj:
                     print(listagem)
             else:
@@ -147,18 +147,18 @@ def main():
         ########### DETALHES JOGO ############
 
         elif opcao[0] == "dj":                                                                                          
-            if len(lista_tabela) != 0:    #verifica se existe jogo em curso
+            if len(lista_tabela) != 0:    #Verifica se existe jogo em curso
                 print(f"Comprimento: {comprimento} | Altura: {altura}")
                 print()
 
                 ########## JOGADOR 1 ##########
 
-                print(f"Nome: {lista_jogo[0]}")
+                print(f"Nome: {lista_jogo[0]}") #Print do primeiro jogador da lista do jogo
                 lista_dj_j1 = []
                 for elemento in lista_pecas_especiais_j1:
-                    if elemento not in lista_dj_j1:
-                        contagem = lista_pecas_especiais_j1.count(elemento)
-                        lista_dj_j1.append(elemento)
+                    if elemento not in lista_dj_j1: #Percorre a lista e verifica se cada elemento não está presente na lista_dj_j1 
+                        contagem = lista_pecas_especiais_j1.count(elemento) #Conta o numero de ocorrencias desse elemento na lista_pecas_especiais_j1
+                        lista_dj_j1.append(elemento)    #Adiciona-o na lista_dj_j1
                         print(f"TamanhoPeça: {elemento} | Quantidade: {contagem}")
                 print()
 
@@ -179,9 +179,9 @@ def main():
         ########### DESISTIR #############
             
         elif opcao[0] == "d":                                                                                           
-            if len(lista_tabela) != 0:
-                if len(opcao) == 3:
-                    if verificar_nomes(lista_rj, opcao[1]) == False and verificar_nomes(lista_rj, opcao[2]) == False:
+            if len(lista_tabela) != 0:  #Verifica se existe um jogo em curso
+                if len(opcao) == 3: #Ambos os jogadores desistem
+                    if verificar_nomes(lista_rj, opcao[1]) == False and verificar_nomes(lista_rj, opcao[2]) == False:   #Verifica se ambos os jogadores estam presentes na lista
                         if opcao[1] in lista_jogo and opcao[2] in lista_jogo:
                             adicionar_jogos(lista_rj, opcao[1])
                             adicionar_jogos(lista_rj, opcao[2]) 
@@ -197,12 +197,12 @@ def main():
                     else:
                         print('Jogador não registado.')
                 
-                elif len(opcao) == 2:
+                elif len(opcao) == 2:   #Apenas 1 jogador desiste
                     if verificar_nomes(lista_rj, opcao[1]) == False:
                         if opcao[1] in lista_jogo:
-                            nome_desistente = opcao[1]    #o nome vencedor ganha o valor do ultimo a jogar
-                            lista_jogo.remove(nome_desistente)    #remove o jogador que ganhou
-                            nome_vencedor_desistencia = lista_jogo[0]   #para que possamos pegar o valor do jogador que perdeu
+                            nome_desistente = opcao[1]    #O nome vencedor ganha o valor do ultimo a jogar
+                            lista_jogo.remove(nome_desistente)    #Remove o jogador que ganhou
+                            nome_vencedor_desistencia = lista_jogo[0]   #Para que possamos pegar o valor do jogador que perdeu
                             adicionar_pontos(lista_rj, nome_vencedor_desistencia)
                             adicionar_jogos(lista_rj, nome_desistente)
                             adicionar_jogos(lista_rj, nome_vencedor_desistencia) 
@@ -224,14 +224,14 @@ def main():
         ########### COLOCAR PEÇA #############
 
         elif opcao[0] == "cp":                      
-            tamanho_peca = int(opcao[2])
-            colunas = int(opcao[3])                                                                                          
-            if len(lista_tabela) != 0:    #verifica se existe jogo em curso
-                if opcao[1] in lista_jogo:    #verifica se nome esta na lista de jogadores em curso
+            tamanho_peca = int(opcao[2])    #Tamanho da peça que vai ser colocada
+            colunas = int(opcao[3])         #A coluna onde a peça irá ser colocada                                                                                       
+            if len(lista_tabela) != 0:      #verifica se existe jogo em curso
+                if opcao[1] in lista_jogo:  #verifica se nome esta na lista de jogadores em curso
 
                     ########## MUDANCA DE JOGADOR ##########
 
-                    if opcao[1] != nome:    #variável nome que serve para alternar a vez dos jogadores                                                      
+                    if opcao[1] != nome:    #Variável nome que serve para alternar a vez dos jogadores                                                      
                         nome = opcao[1]                    
 
                         ########## PECA UNITARIA ##########
@@ -241,9 +241,9 @@ def main():
                             ########## JOGADOR 1 ##########
 
                             if nome == lista_jogo[0]:   
-                                if lista_tabela[0][colunas] == "|___|":    #verifica se a coluna inserida está cheia
+                                if lista_tabela[0][colunas] == "|___|":    #Verifica se a coluna inserida está cheia
                                     ultimo_elemento_vazio = 1
-                                    for i in range(len(lista_tabela)):      #loop para verificar os elementos vazios da coluna e no final inserir a jogada
+                                    for i in range(len(lista_tabela)):     #Loop para verificar os elementos vazios da coluna e no final inserir a jogada
                                         if lista_tabela[i][colunas] == "|___|":
                                             ultimo_elemento_vazio = i
                                         else:
@@ -254,14 +254,14 @@ def main():
                                     ##########  HORIZONTAL ##########
 
                                     for i in range(len(lista_tabela)):
-                                        for j in range(len(lista_tabela[i])):    #itera todos os valores da lista em base de linhas
-                                            if horizontal != sequencia_vencedora:   #verifica se o variavel é igual a sequencia vencedora
+                                        for j in range(len(lista_tabela[i])):       #Itera todos os valores da lista em base de linhas
+                                            if horizontal != sequencia_vencedora:   #Verifica se a variavel é diferente da sequencia vencedora
                                                 if lista_tabela[i][j] == "| X |":
                                                     horizontal += 1 
-                                                    if horizontal == sequencia_vencedora:   #segunda verificação
-                                                        nome_vencedor = nome    #o nome vencedor ganha o valor do ultimo a jogar
-                                                        lista_jogo.remove(nome_vencedor)    #remove o jogador que ganhou
-                                                        nome_perdedor = lista_jogo[0]   #para que possamos pegar o valor do jogador que perdeu
+                                                    if horizontal == sequencia_vencedora:   #Segunda verificação
+                                                        nome_vencedor = nome                #O nome vencedor ganha o valor do ultimo a jogar
+                                                        lista_jogo.remove(nome_vencedor)    #Remove o jogador que ganhou
+                                                        nome_perdedor = lista_jogo[0]       #Para que possamos pegar o valor do jogador que perdeu
                                                         adicionar_pontos(lista_rj, nome_vencedor)
                                                         adicionar_jogos(lista_rj, nome_vencedor)
                                                         adicionar_jogos(lista_rj, nome_perdedor) 
@@ -282,14 +282,14 @@ def main():
 
                                     if horizontal != sequencia_vencedora:
                                         for j in range(len(lista_tabela[0])):
-                                            for i in range(len(lista_tabela)):  #itera todos os valores da lista em base de colunas
-                                                if vertical != sequencia_vencedora:     #verifica se o variavel é igual a sequencia vencedora
+                                            for i in range(len(lista_tabela)):          #Itera todos os valores da lista em base de colunas
+                                                if vertical != sequencia_vencedora:     #Verifica se o variavel é igual a sequencia vencedora
                                                     if lista_tabela[i][j] == "| X |":
                                                         vertical += 1 
-                                                        if horizontal == sequencia_vencedora:   #segunda verificação
-                                                            nome_vencedor = nome    #o nome vencedor ganha o valor do ultimo a jogar
-                                                            lista_jogo.remove(nome_vencedor)    #remove o jogador que ganhou
-                                                            nome_perdedor = lista_jogo[0]   #para que possamos pegar o valor do jogador que perdeu
+                                                        if horizontal == sequencia_vencedora:   #Segunda verificação
+                                                            nome_vencedor = nome                #O nome vencedor ganha o valor do ultimo a jogar
+                                                            lista_jogo.remove(nome_vencedor)    #Remove o jogador que ganhou
+                                                            nome_perdedor = lista_jogo[0]       #Para que possamos pegar o valor do jogador que perdeu
                                                             adicionar_pontos(lista_rj, nome_vencedor)
                                                             adicionar_jogos(lista_rj, nome_vencedor)
                                                             adicionar_jogos(lista_rj, nome_perdedor) 
@@ -1145,10 +1145,10 @@ def main():
             ########### VISUALIZAR RESULTADO #############
 
         elif opcao[0] == "v":                                                                                           
-            if len(lista_tabela) != 0:
-                for i in range(len(lista_tabela)):      #represetação gráfica da tabela atualizada
+            if len(lista_tabela) != 0:  #Verifica se existe um jogo em curso
+                for i in range(len(lista_tabela)):      #Representação gráfica da tabela atualizada
                     for j in range(len(lista_tabela[i])):
-                        print(lista_tabela[i][j],end = '')                        
+                        print(lista_tabela[i][j],end = '')  #Print ao elemento [i][j] e dá um espaço entre eles                       
                     print()
             else:
                 print("Não existe jogo em curso")
@@ -1171,7 +1171,7 @@ def main():
             ########## LER #############
 
         elif opcao[0] == "l": 
-            if opcao[1] == "jogo_guardado":     #le o jogo                                                                                         
+            if opcao[1] == "jogo_guardado":                                                                                           
                 ler_ficheiro_json("jogo_guardado.json")
                 lista_tabela = jogo_atual[0]
                 lista_jogo = jogo_atual[1]
